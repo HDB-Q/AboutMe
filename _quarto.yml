@@ -9,6 +9,7 @@ website:
       - href: index.qmd
         text: Home
       - projects.qmd
+      - newfile.qmd
     tools:
       - icon: twitter
         href: https://twitter.com/
@@ -16,11 +17,11 @@ website:
         href: https://github.com/HDB-Q/AboutMe
   page-footer:
     right: "Built with [Quarto](https://quarto.org/)"
-    left: "&copy; Copyright 2023, Hans B"
+    left: "&copy; Copyright 2024, Hans B"
 
 format:
   html:
-    theme: darkly
+    theme: pulse
     toc: true
 
 editor: source
