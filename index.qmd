@@ -1,5 +1,5 @@
 ---
-title: "About Me"
+title: "Work in Progress!"
 about:
   id: me
   template: broadside
@@ -9,8 +9,10 @@ about:
 :::{#me}
 
 ## Goals
++ Work on Quarto
 
 ## Education
++ MMA Rotman
 
 ## Experience
 
