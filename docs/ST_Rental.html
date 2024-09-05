@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>A bit about me: – Hans’ Portfolio (WIP)</title>
+<title>Short Term Rental – Hans’ Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,6 +33,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
@@ -71,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -79,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Hans’ Portfolio (WIP)</span>
+    <span class="navbar-title">Hans’ Portfolio</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -89,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -97,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Projects &amp; Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./ST_Rental.html"> 
+    <a class="nav-link active" href="./ST_Rental.html" aria-current="page"> 
 <span class="menu-text">Short Term Rental</span></a>
   </li>  
 </ul>
@@ -113,49 +114,126 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#tracking-airbnb-in-toronto-using-registration-data" id="toc-tracking-airbnb-in-toronto-using-registration-data" class="nav-link active" data-scroll-target="#tracking-airbnb-in-toronto-using-registration-data">Tracking Airbnb in Toronto using Registration Data</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
-
-
-
-<div class="quarto-about-broadside column-page">
-  <div class="about-main">
-    <div class="about-entity" style="background-image: url('img/profile.png')"></div>
-    <div class="about-contents"><header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">A bit about me:</h1>
+<h1 class="title">Short Term Rental</h1>
 </div>
+
+
+
 <div class="quarto-title-meta">
+
+    
+  
+    
   </div>
-</header><div id="me">
-<p>I am a Machine Learning Professional furthering my technical skills at Rotman currently.</p>
-<section id="education" class="level2">
-<h2 data-anchor-id="education">Education</h2>
+  
+
+
+</header>
+
+
+<section id="tracking-airbnb-in-toronto-using-registration-data" class="level3">
+<h3 class="anchored" data-anchor-id="tracking-airbnb-in-toronto-using-registration-data">Tracking Airbnb in Toronto using Registration Data</h3>
+<p>The City of Toronto maintains several <a href="https://www.toronto.ca/city-government/data-research-maps/open-data/">open datasets</a> related to city operations - updated at a range of frequencies. This project is focused on the Short Term Rental Registration data (updated daily). This data is useful in tracking active Airbnb and similar short term accomodations in Toronto. In order to retrieve insights from these applications, we’d need to gather the data for analysis. However, the data has some limitations - mainly that only active listings are available, not all the historical data.</p>
+<p>Per the given metadata, <em>A short-term rental is all or part of a dwelling unit rented out for less than 28 consecutive days in exchange for payment. Short-term rentals include bed and breakfasts, but exclude hotels, motels, student residences owned or operated by publicly funded or non-profit educational institutions.</em> See the City’s <a href="https://www.toronto.ca/community-people/housing-shelter/short-term-rentals/">page</a> for more information.</p>
+<p>In this article, we walk through a practical example of managing and updating a database of short-term rental listings using and SQLite. The goal is to maintain an up-to-date record of rental properties by regularly incorporating new data and updating existing records. Here’s a step-by-step guide on how this can be achieved.</p>
+<section id="setting-up-the-environment" class="level4">
+<h4 class="anchored" data-anchor-id="setting-up-the-environment">Setting Up the Environment</h4>
+<p><strong>Package Imports:</strong> To begin, we import necessary packages including:</p>
 <ul>
-<li>Candidate: Masters of Management Analytics at Rotman School of Management</li>
-<li>Bachlors of Business Administration at University of Toronto</li>
-<li>Undergraduate Exchange at University of Sydney</li>
+<li><code>pandas</code> for data manipulation,</li>
+<li><code>sqlite3</code> for database interactions,</li>
+<li><code>hashlib</code> for hashing, and</li>
+<li>a custom script (<code>ShortTermRental</code>) to fetch from Toronto’s Open Data.</li>
 </ul>
+<p>2<strong>Fetching from Toronto’s Open Data</strong></p>
 </section>
-<section id="experience" class="level2">
-<h2 data-anchor-id="experience">Experience</h2>
+<section id="setting-up-the-environment-1" class="level4">
+<h4 class="anchored" data-anchor-id="setting-up-the-environment-1">Setting Up the Environment</h4>
+<p>To get started, we need to set up our environment by importing the necessary packages. In this case, we’ll use <code>requests</code> to make API calls, <code>pandas</code> for data manipulation, and <code>datetime</code> to handle date and time information.</p>
+<pre><code>import requests
+import pandas as pd
+from datetime import datetime, date</code></pre>
+</section>
+<section id="fetching-rental-data" class="level4">
+<h4 class="anchored" data-anchor-id="fetching-rental-data">Fetching Rental Data</h4>
+<p>The core of our data process involves an API to retrieve short-term rental data:</p>
+<ol type="1">
+<li><p><strong>Define the API Endpoint:</strong> We first define the base URL for the API provided by the City of Toronto’s <a href="https://open.toronto.ca/dataset/short-term-rentals-registration/">open data portal</a>. The endpoint for accessing data packages is constructed as follows:</p>
+<pre><code>base_url = "https://ckan0.cf.opendata.inter.prod-toronto.ca"
+url = base_url + "/api/3/action/package_show"
+params = { "id": "short-term-rentals-registration" }</code></pre></li>
+<li><p><strong>Make the API Call:</strong> We send a GET request using the requests library to the API to retrieve the data package information:</p>
+<pre><code>package = requests.get(url, params=params).json()</code></pre></li>
+<li><p><strong>Process the Data:</strong> The API response contains various resources related to the dataset. We loop through these resources, checking if they are active data stores (<code>datastore_active</code>). For each active resource, we fetch the data in CSV format:</p>
+<pre><code>df_big = pd.DataFrame()
+
+for idx, resource in enumerate(package["result"]["resources"]):
+    if resource["datastore_active"]:
+        url = base_url + "/datastore/dump/" + resource["id"]
+        df_temp = pd.read_csv(url)
+        df_temp['filename'] = url
+        df_temp['first_seen'] = datetime.now().strftime('%Y-%m-%d')
+        df_temp['last_active'] = datetime.now().strftime('%Y-%m-%d')
+        df_big = pd.concat([df_big, df_temp])</code></pre>
+<p>Here’s what each step does:</p>
 <ul>
-<li>Data Communicator, Freelance</li>
-<li>Data Scientist, Indigo Park Canada</li>
-<li>Data Scientist, The BRIDGE</li>
-<li>Digital Insights and Data Analyst, Lactalis Canada</li>
-</ul>
+<li><strong>Fetch CSV Data:</strong> We build up the URL to access the data dump and read it into a pandas DataFrame.</li>
+<li><strong>Add Metadata:</strong> We include additional columns to keep track of the source URL, the date the data was first seen, and the date it was last active. This will be used later to help track registrations across time, and provide metrics</li>
+<li><strong>Concatenate DataFrames:</strong> We combine all the data into a single DataFrame for easier handling.</li>
+</ul></li>
+<li><p><strong>Return the Data:</strong> Finally, the function returns the combined DataFrame containing all the rental data:</p>
+<pre><code>return df_big</code></pre></li>
+</ol>
+<p>This script provides a streamlined approach to fetching and processing short-term rental data. This method is not only applicable to rental data but can be adapted to various other data sources and types. Feel free to browse <a href="https://open.toronto.ca/">Toronto’s Open Data Portal</a></p>
 </section>
-</div></div>
-  </div>
-</div>
+<section id="database-setup-and-initialization" class="level4">
+<h4 class="anchored" data-anchor-id="database-setup-and-initialization">Database Setup and Initialization</h4>
+<ol type="1">
+<li><p><strong>SQLite Database Creation:</strong> We create an SQLite database (<code>ShortTermRental.db</code>) and define a table <code>short_term_rentals</code> to store rental data. The table includes columns for a unique hash, rental details, and date information.</p></li>
+<li><p><strong>Populating Initial Data:</strong> Using a CSV file with initial rental data, we calculate the unique hash for each record and insert the data into the <code>short_term_rentals</code> table. This sets up our base dataset.</p></li>
+</ol>
+</section>
+<section id="handling-new-data" class="level4">
+<h4 class="anchored" data-anchor-id="handling-new-data">Handling New Data</h4>
+<ol start="0" type="1">
+<li><p><strong>Hashing Function:</strong> A hash function is used to create a unique identifier for each rental record based on specific columns such as <code>operator_registration_number</code>, <code>address</code>, <code>unit</code>, <code>postal_code</code>, <code>property_type</code>, <code>ward_number</code>, and <code>ward_name</code>. This identifier helps in quickly comparing new records with existing ones to identify updates or new entries.</p></li>
+<li><p><strong>Creating Temporary Table:</strong> A temporary table (<code>temp_rental</code>) is created to hold new rental data fetched periodically. This table mirrors the structure of the main table but is used to manage and compare new entries.</p></li>
+<li><p><strong>Fetching and Inserting New Data:</strong> New rental data is fetched using the custom script and inserted into the <code>temp_rental</code> table. Hash values are generated for this new data to facilitate efficient comparison with existing records.</p></li>
+<li><p><strong>Identifying New Records:</strong> A query is executed to identify records in <code>temp_rental</code> that are not present in <code>short_term_rentals</code>. This helps in pinpointing new listings that need to be added to the main database.</p></li>
+<li><p><strong>Updating the Main Database:</strong> New records are appended to the <code>short_term_rentals</code> table. Additionally, the <code>last_active</code> field is updated to reflect the most recent activity date for active listings.</p></li>
+</ol>
+</section>
+<section id="finalizing-changes" class="level4">
+<h4 class="anchored" data-anchor-id="finalizing-changes">Finalizing Changes</h4>
+<ol type="1">
+<li><p><strong>Commit and Save:</strong> Changes are committed to the database to ensure that all updates are saved. The connection to the database is closed to finalize the session.</p></li>
+<li><p><strong>Export New Data:</strong> A CSV file (<code>new_information_only.csv</code>) is generated to keep a record of newly added entries for further analysis or reporting.</p></li>
+</ol>
+</section>
+<section id="testing-and-validation" class="level4">
+<h4 class="anchored" data-anchor-id="testing-and-validation">Testing and Validation</h4>
+<ol type="1">
+<li><strong>Verification:</strong> Various queries are used to verify that the updates and new entries are correctly reflected in the database. This includes checking for records with updated <code>last_active</code> dates and ensuring that the data in <code>short_term_rentals</code> matches expectations.</li>
+</ol>
+<p>By following these steps, we ensure that our rental data remains current and accurate. This approach can be adapted to manage other types of datasets and databases, demonstrating a powerful method for data integration and management using and SQLite.</p>
 
-<p>Thanks for checking out my web site!</p>
 
-
-
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -322,6 +400,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   } else {
     toggleColorMode(false);
   }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     

@@ -1,0 +1,128 @@
+---
+title: Short Term Rental
+filters:
+  - lightbox
+lightbox: auto
+---
+
+### Tracking Airbnb in Toronto using Registration Data
+
+The City of Toronto maintains several [open datasets](https://www.toronto.ca/city-government/data-research-maps/open-data/) related to city operations - updated at a range of frequencies.  This project is focused on the Short Term Rental Registration data (updated daily). This data is useful in tracking active Airbnb and similar short term accomodations in Toronto. In order to retrieve insights from these applications, we'd need to gather the data for analysis. However, the data has some limitations - mainly that only active listings are available, not all the historical data. 
+
+Per the given metadata, *A short-term rental is all or part of a dwelling unit rented out for less than 28 consecutive days in exchange for payment. Short-term rentals include bed and breakfasts, but exclude hotels, motels, student residences owned or operated by publicly funded or non-profit educational institutions.* See the City's [page](https://www.toronto.ca/community-people/housing-shelter/short-term-rentals/) for more information.
+
+
+In this article, we walk through a practical example of managing and updating a database of short-term rental listings using  and SQLite. The goal is to maintain an up-to-date record of rental properties by regularly incorporating new data and updating existing records. Here’s a step-by-step guide on how this can be achieved.
+
+#### Setting Up the Environment
+**Package Imports:**
+   To begin, we import necessary  packages including:
+
+   - `pandas` for data manipulation, 
+   - `sqlite3` for database interactions, 
+   - `hashlib` for hashing, and 
+   - a custom script (`ShortTermRental`) to fetch from Toronto's Open Data.
+
+2**Fetching from Toronto's Open Data**
+
+#### Setting Up the Environment
+
+To get started, we need to set up our  environment by importing the necessary packages. In this case, we'll use `requests` to make API calls, `pandas` for data manipulation, and `datetime` to handle date and time information.
+
+```
+import requests
+import pandas as pd
+from datetime import datetime, date
+```
+
+#### Fetching Rental Data
+
+The core of our data process involves an API to retrieve short-term rental data:
+
+1. **Define the API Endpoint:**
+   We first define the base URL for the API provided by the City of Toronto’s [open data portal](https://open.toronto.ca/dataset/short-term-rentals-registration/). The endpoint for accessing data packages is constructed as follows:
+
+   ```
+   base_url = "https://ckan0.cf.opendata.inter.prod-toronto.ca"
+   url = base_url + "/api/3/action/package_show"
+   params = { "id": "short-term-rentals-registration" }
+   ```
+
+2. **Make the API Call:**
+   We send a GET request using the requests library to the API to retrieve the data package information:
+
+   ```
+   package = requests.get(url, params=params).json()
+   ```
+
+3. **Process the Data:**
+   The API response contains various resources related to the dataset. We loop through these resources, checking if they are active data stores (`datastore_active`). For each active resource, we fetch the data in CSV format:
+
+   ```
+   df_big = pd.DataFrame()
+   
+   for idx, resource in enumerate(package["result"]["resources"]):
+       if resource["datastore_active"]:
+           url = base_url + "/datastore/dump/" + resource["id"]
+           df_temp = pd.read_csv(url)
+           df_temp['filename'] = url
+           df_temp['first_seen'] = datetime.now().strftime('%Y-%m-%d')
+           df_temp['last_active'] = datetime.now().strftime('%Y-%m-%d')
+           df_big = pd.concat([df_big, df_temp])
+   ```
+
+   Here’s what each step does:
+   - **Fetch CSV Data:** We build up the URL to access the data dump and read it into a pandas DataFrame.
+   - **Add Metadata:** We include additional columns to keep track of the source URL, the date the data was first seen, and the date it was last active. This will be used later to help track registrations across time, and provide metrics
+   - **Concatenate DataFrames:** We combine all the data into a single DataFrame for easier handling.
+
+4. **Return the Data:**
+   Finally, the function returns the combined DataFrame containing all the rental data:
+
+   ```
+   return df_big
+   ```
+
+This  script provides a streamlined approach to fetching and processing short-term rental data. This method is not only applicable to rental data but can be adapted to various other data sources and types. Feel free to browse [Toronto's Open Data Portal](https://open.toronto.ca/) 
+
+#### Database Setup and Initialization
+
+1. **SQLite Database Creation:**
+   We create an SQLite database (`ShortTermRental.db`) and define a table `short_term_rentals` to store rental data. The table includes columns for a unique hash, rental details, and date information.
+
+
+
+2. **Populating Initial Data:**
+   Using a CSV file with initial rental data, we calculate the unique hash for each record and insert the data into the `short_term_rentals` table. This sets up our base dataset.
+
+#### Handling New Data
+0. **Hashing Function:**
+   A hash function is used to create a unique identifier for each rental record based on specific columns such as `operator_registration_number`, `address`, `unit`, `postal_code`, `property_type`, `ward_number`, and `ward_name`. This identifier helps in quickly comparing new records with existing ones to identify updates or new entries.
+
+
+1. **Creating Temporary Table:**
+   A temporary table (`temp_rental`) is created to hold new rental data fetched periodically. This table mirrors the structure of the main table but is used to manage and compare new entries.
+
+2. **Fetching and Inserting New Data:**
+   New rental data is fetched using the custom script and inserted into the `temp_rental` table. Hash values are generated for this new data to facilitate efficient comparison with existing records.
+
+3. **Identifying New Records:**
+   A query is executed to identify records in `temp_rental` that are not present in `short_term_rentals`. This helps in pinpointing new listings that need to be added to the main database.
+
+4. **Updating the Main Database:**
+   New records are appended to the `short_term_rentals` table. Additionally, the `last_active` field is updated to reflect the most recent activity date for active listings.
+
+#### Finalizing Changes
+
+1. **Commit and Save:**
+   Changes are committed to the database to ensure that all updates are saved. The connection to the database is closed to finalize the session.
+
+2. **Export New Data:**
+   A CSV file (`new_information_only.csv`) is generated to keep a record of newly added entries for further analysis or reporting.
+
+#### Testing and Validation
+
+1. **Verification:**
+   Various queries are used to verify that the updates and new entries are correctly reflected in the database. This includes checking for records with updated `last_active` dates and ensuring that the data in `short_term_rentals` matches expectations.
+
+By following these steps, we ensure that our rental data remains current and accurate. This approach can be adapted to manage other types of datasets and databases, demonstrating a powerful method for data integration and management using  and SQLite.

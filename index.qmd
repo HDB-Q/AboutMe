@@ -1,5 +1,5 @@
 ---
-title: "Work in Progress!"
+title: "A bit about me:"
 about:
   id: me
   template: broadside
@@ -8,13 +8,18 @@ about:
 
 :::{#me}
 
-## Goals
-+ Work on Quarto
+I am a Machine Learning Professional furthering my technical skills at Rotman currently.
 
 ## Education
-+ MMA Rotman
++ Candidate: Masters of Management Analytics at Rotman School of Management
++ Bachlors of Business Administration at University of Toronto
++ Undergraduate Exchange at University of Sydney
 
 ## Experience
++ Data Communicator, Freelance
++ Data Scientist, Indigo Park Canada
++ Data Scientist, The BRIDGE
++ Digital Insights and Data Analyst, Lactalis Canada
 
 :::
 

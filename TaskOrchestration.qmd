@@ -1,0 +1,27 @@
+---
+title: Task Orchestration
+filters:
+  - lightbox
+lightbox: auto
+---
+
+## Task Orchestration
+
+Task orchestration through tools like `Crontab` or `Windows Task Scheduler` is useful for automating routine processes and managing system tasks. 
+
+These tools enable users to schedule scripts and other workloads to run automatically at specified times (such as automatic program updates). By automating these tasks, users can ensure critical operations are performed consistently without manual intervention, reducing the risk of human error and freeing up valuable time in both personal and professional environments.
+
+In this series, we will use crontab to autorun some scraping scripts
+
+![Automation Icon](img/Automation_Icon.png){description="Automation. _credit:_ [Flaticon Pack](https://www.flaticon.com/free-icon/automation_3417681?term=automation&page=1&position=16&origin=search&related_id=3417681)"
+desc-position="left"}
+
+## For Linux
+
+The below demonstrates placing more than one image in a gallery. Note
+the usage of the `layout-ncol` which arranges the images on the page
+side by date. Adding the `group` attribute to the markdown images places
+the images in a gallery grouped together based upon the group name
+provided.
+
+## For Windows

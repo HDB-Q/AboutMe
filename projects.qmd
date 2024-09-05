@@ -1,11 +1,39 @@
 ---
-title: "Projects"
+title: "Projects & Blog"
+toc: false
+#linkcolor: black
 ---
 
-## Project 1
-+ This is project 1
+## [Tracking Short Term Rental in Toronto](ST_Rental.qmd)
+This project fetches open data to store in a SQLite Database. Since only active registrations are listed, a database tracks status across time. A unique hash is generated for each address, and compares the differentials to update each location accordingly.
+
+<span class="badge bg-success">Requests</span>
+<span class="badge bg-success">Hashlib</span>
+<span class="badge bg-success">SQLite3</span>
 
 
-## Project 2
+## [Basic Task Orchestration](TaskOrchestration.qmd)
+This blog walks through script automation using Task Scheduler and Crontab. These tools can programatically run py files, and others - eliminating manual interactions. Naturally, these work as long as the machine is powered, and thus are best suited for remote VMs running 24/7
+<span class="badge bg-success">Crontab</span>
+<span class="badge bg-success">Windows Task Scheduler</span>
+<span class="badge bg-success">Batch Files</span>
 
-## Project 3
+## Webscraping and accessing values from console
+Sending AJAX requests to backends may be useful in certain projects, but authentication/bearer/JWT tokens may limit the success of such requests. Thus, this project uses Selenium to simulate a user and extract console values, such as cookies, or bearer tokens. 
+
+<span class="badge bg-success">Selenium</span>
+<span class="badge bg-success">Requests</span>
+
+## Stochastic Oscillator
+Stochastic Oscilallators are from a family of technical indicators that can be used to infer buy/sell signals. This project pulls TSX data from yfinance, performs the technical analysis and returns a chart of buy and sell signals. As only historical data is used, thus this project serves as a technical showcase, rather than a tool for recommendations
+
+<span class="badge bg-success">yfinance</span>
+<span class="badge bg-success">Pandas</span>
+<span class="badge bg-success">Matplotlib</span>
+
+## Predicting E-Coli Levels in Toronto Beaches
+High E-Coli levels in Toronto's beaches signals that the water is unsafe, and is closed off to the public. This disrupts water activities including local recreation businesses. This project seeks to train a predictive model to identify future high e-coli levels.
+
+<span class="badge bg-success">Requests</span>
+<span class="badge bg-success">SKLearn</span>
+<span class="badge bg-success">Pandas</span>

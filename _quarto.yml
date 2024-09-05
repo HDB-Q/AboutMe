@@ -3,16 +3,15 @@ project:
   output-dir: docs
   
 website:
-  title: "Work in Progress"
+  title: "Hans' Portfolio (WIP)"
   navbar:
-    left:
+    right:
       - href: index.qmd
         text: Home
       - projects.qmd
-      - newfile.qmd
+      - ST_Rental.qmd
+
     tools:
-      - icon: twitter
-        href: https://twitter.com/
       - icon: github
         href: https://github.com/HDB-Q/AboutMe
   page-footer:
@@ -21,7 +20,9 @@ website:
 
 format:
   html:
-    theme: pulse
+    theme: 
+      light: [litera, styles.scss]
+      dark: [darkly, styles-dark.scss]
     toc: true
 
 editor: source
