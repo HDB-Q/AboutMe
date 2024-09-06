@@ -8,7 +8,7 @@ about:
 
 :::{#me}
 
-I am a Machine Learning Professional furthering my technical skills at Rotman currently.
+I am an MMA Candidate furthering my Machine Learning skills at Rotman currently.
 
 ## Education
 + Candidate: Masters of Management Analytics at Rotman School of Management
