@@ -22,7 +22,7 @@ format:
   html:
     theme: 
       light: [litera, styles.scss]
-      dark: [darkly, styles-dark.scss]
+      dark: [solar, styles-dark.scss]
     toc: true
 
 editor: source
