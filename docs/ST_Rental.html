@@ -120,6 +120,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#tracking-airbnb-in-toronto-using-registration-data" id="toc-tracking-airbnb-in-toronto-using-registration-data" class="nav-link active" data-scroll-target="#tracking-airbnb-in-toronto-using-registration-data">Tracking Airbnb in Toronto using Registration Data</a></li>
+  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization">Visualization</a></li>
   </ul>
 </nav>
     </div>
@@ -159,7 +160,7 @@ ul.task-list li input[type="checkbox"] {
 <li><code>hashlib</code> for hashing, and</li>
 <li>a custom script (<code>ShortTermRental</code>) to fetch from Toronto’s Open Data.</li>
 </ul>
-<p>2<strong>Fetching from Toronto’s Open Data</strong></p>
+<p><strong>Fetching from Toronto’s Open Data</strong></p>
 </section>
 <section id="setting-up-the-environment-1" class="level4">
 <h4 class="anchored" data-anchor-id="setting-up-the-environment-1">Setting Up the Environment</h4>
@@ -172,32 +173,39 @@ from datetime import datetime, date</code></pre>
 <h4 class="anchored" data-anchor-id="fetching-rental-data">Fetching Rental Data</h4>
 <p>The core of our data process involves an API to retrieve short-term rental data:</p>
 <ol type="1">
-<li><p><strong>Define the API Endpoint:</strong> We first define the base URL for the API provided by the City of Toronto’s <a href="https://open.toronto.ca/dataset/short-term-rentals-registration/">open data portal</a>. The endpoint for accessing data packages is constructed as follows:</p>
-<pre><code>base_url = "https://ckan0.cf.opendata.inter.prod-toronto.ca"
-url = base_url + "/api/3/action/package_show"
-params = { "id": "short-term-rentals-registration" }</code></pre></li>
-<li><p><strong>Make the API Call:</strong> We send a GET request using the requests library to the API to retrieve the data package information:</p>
-<pre><code>package = requests.get(url, params=params).json()</code></pre></li>
-<li><p><strong>Process the Data:</strong> The API response contains various resources related to the dataset. We loop through these resources, checking if they are active data stores (<code>datastore_active</code>). For each active resource, we fetch the data in CSV format:</p>
-<pre><code>df_big = pd.DataFrame()
-
-for idx, resource in enumerate(package["result"]["resources"]):
-    if resource["datastore_active"]:
-        url = base_url + "/datastore/dump/" + resource["id"]
-        df_temp = pd.read_csv(url)
-        df_temp['filename'] = url
-        df_temp['first_seen'] = datetime.now().strftime('%Y-%m-%d')
-        df_temp['last_active'] = datetime.now().strftime('%Y-%m-%d')
-        df_big = pd.concat([df_big, df_temp])</code></pre>
-<p>Here’s what each step does:</p>
-<ul>
-<li><strong>Fetch CSV Data:</strong> We build up the URL to access the data dump and read it into a pandas DataFrame.</li>
-<li><strong>Add Metadata:</strong> We include additional columns to keep track of the source URL, the date the data was first seen, and the date it was last active. This will be used later to help track registrations across time, and provide metrics</li>
-<li><strong>Concatenate DataFrames:</strong> We combine all the data into a single DataFrame for easier handling.</li>
-</ul></li>
-<li><p><strong>Return the Data:</strong> Finally, the function returns the combined DataFrame containing all the rental data:</p>
-<pre><code>return df_big</code></pre></li>
+<li><p><strong>Define the API Endpoint:</strong> We first define the base URL for the API provided by the City of Toronto’s <a href="https://open.toronto.ca/dataset/short-term-rentals-registration/">open data portal</a>. Much of this will be provided by the developper tab on the Open Data Portal. Feel free to do a high level request and navigate around the response to find what you may be looking for.</p></li>
+<li><p><strong>Make the API Call:</strong> We send a GET request using the requests library to the API to retrieve the data package information</p></li>
+<li><p><strong>Process the Data:</strong> The API response contains various resources related to the dataset. We loop through these resources, checking if they are active data stores (<code>datastore_active</code>). For each active resource, we fetch the data in CSV format:</p></li>
+<li><p><strong>Return the Data:</strong> Finally, the function returns the combined DataFrame containing all the rental data.</p></li>
 </ol>
+<pre><code>def fetch_rental_data():
+    # To hit the API, you'll be making requests to:
+    base_url = "https://ckan0.cf.opendata.inter.prod-toronto.ca"
+        
+    # Datasets are called "packages". Each package can contain many "resources"
+    url = base_url + "/api/3/action/package_show"
+    params = { "id": "short-term-rentals-registration"}
+        
+    package = requests.get(url, params = params).json()
+
+   # Placeholder df to hold the extracted information
+    df_big = pd.DataFrame()
+
+    # To get resource data:
+    for idx, resource in enumerate(package["result"]["resources"]):
+
+        # for datastore_active resources - returns a bool:
+        if resource["datastore_active"]:
+            # To get all records in CSV format:
+            url = base_url + "/datastore/dump/" + resource["id"]
+            
+            df_temp= pd.read_csv(url)
+            df_temp['filename'] = url
+            df_temp['first_seen'] = datetime.now().strftime('%Y-%m-%d')
+            df_temp['last_active'] = datetime.now().strftime('%Y-%m-%d')
+            df_big = pd.concat([df_big,df_temp])
+            
+    return df_big</code></pre>
 <p>This script provides a streamlined approach to fetching and processing short-term rental data. This method is not only applicable to rental data but can be adapted to various other data sources and types. Feel free to browse <a href="https://open.toronto.ca/">Toronto’s Open Data Portal</a></p>
 </section>
 <section id="database-setup-and-initialization" class="level4">
@@ -230,9 +238,13 @@ for idx, resource in enumerate(package["result"]["resources"]):
 <li><strong>Verification:</strong> Various queries are used to verify that the updates and new entries are correctly reflected in the database. This includes checking for records with updated <code>last_active</code> dates and ensuring that the data in <code>short_term_rentals</code> matches expectations.</li>
 </ol>
 <p>By following these steps, we ensure that our rental data remains current and accurate. This approach can be adapted to manage other types of datasets and databases, demonstrating a powerful method for data integration and management using and SQLite.</p>
-
-
 </section>
+</section>
+<section id="visualization" class="level3">
+<h3 class="anchored" data-anchor-id="visualization">Visualization</h3>
+<p>Once we are able to reliably collect historical information, we can start to visualize the information through Power BI for example</p>
+
+
 </section>
 
 </main> <!-- /main -->

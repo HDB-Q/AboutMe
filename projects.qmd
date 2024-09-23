@@ -3,6 +3,8 @@ title: "Projects & Blog"
 toc: false
 #linkcolor: black
 ---
+Here are some highlights from my past projects: 
+
 
 ## [Tracking Short Term Rental in Toronto](ST_Rental.qmd)
 This project fetches open data to store in a SQLite Database. Since only active registrations are listed, a database tracks status across time. A unique hash is generated for each address, and compares the differentials to update each location accordingly.
@@ -12,13 +14,14 @@ This project fetches open data to store in a SQLite Database. Since only active 
 <span class="badge bg-success">SQLite3</span>
 
 
-## [Basic Task Orchestration](TaskOrchestration.qmd)
+## [Simple Task Orchestration](TaskOrchestration.qmd)
 This blog walks through script automation using Task Scheduler and Crontab. These tools can programatically run py files, and others - eliminating manual interactions. Naturally, these work as long as the machine is powered, and thus are best suited for remote VMs running 24/7
+
 <span class="badge bg-success">Crontab</span>
 <span class="badge bg-success">Windows Task Scheduler</span>
 <span class="badge bg-success">Batch Files</span>
 
-## Webscraping and accessing values from console
+## [Webscraping and accessing values from console](ConsoleValues.qmd)
 Sending AJAX requests to backends may be useful in certain projects, but authentication/bearer/JWT tokens may limit the success of such requests. Thus, this project uses Selenium to simulate a user and extract console values, such as cookies, or bearer tokens. 
 
 <span class="badge bg-success">Selenium</span>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Task Orchestration – Hans’ Portfolio</title>
+<title>Task Orchestration – Hans’ Portfolio (WIP)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -83,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Hans’ Portfolio</span>
+    <span class="navbar-title">Hans’ Portfolio (WIP)</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -123,8 +123,23 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#task-orchestration" id="toc-task-orchestration" class="nav-link active" data-scroll-target="#task-orchestration">Task Orchestration</a></li>
-  <li><a href="#for-linux" id="toc-for-linux" class="nav-link" data-scroll-target="#for-linux">For Linux</a></li>
-  <li><a href="#for-windows" id="toc-for-windows" class="nav-link" data-scroll-target="#for-windows">For Windows</a></li>
+  <li><a href="#for-linux" id="toc-for-linux" class="nav-link" data-scroll-target="#for-linux">For Linux</a>
+  <ul class="collapse">
+  <li><a href="#open-terminal" id="toc-open-terminal" class="nav-link" data-scroll-target="#open-terminal">1. Open Terminal</a></li>
+  <li><a href="#edit-crontab" id="toc-edit-crontab" class="nav-link" data-scroll-target="#edit-crontab">2. Edit Crontab</a></li>
+  <li><a href="#add-a-cron-job" id="toc-add-a-cron-job" class="nav-link" data-scroll-target="#add-a-cron-job">3. Add a Cron Job</a></li>
+  <li><a href="#save-and-exit" id="toc-save-and-exit" class="nav-link" data-scroll-target="#save-and-exit">4. Save and Exit</a></li>
+  <li><a href="#verify-cron-jobs" id="toc-verify-cron-jobs" class="nav-link" data-scroll-target="#verify-cron-jobs">5. Verify Cron Jobs</a></li>
+  </ul></li>
+  <li><a href="#for-windows" id="toc-for-windows" class="nav-link" data-scroll-target="#for-windows">For Windows</a>
+  <ul class="collapse">
+  <li><a href="#create-a-batch-file" id="toc-create-a-batch-file" class="nav-link" data-scroll-target="#create-a-batch-file">1. Create a Batch File</a></li>
+  <li><a href="#save-the-batch-file" id="toc-save-the-batch-file" class="nav-link" data-scroll-target="#save-the-batch-file">2. Save the Batch File:</a></li>
+  <li><a href="#schedule-the-batch-file-with-task-scheduler" id="toc-schedule-the-batch-file-with-task-scheduler" class="nav-link" data-scroll-target="#schedule-the-batch-file-with-task-scheduler">3. Schedule the Batch File with Task Scheduler</a></li>
+  <li><a href="#choose-the-action" id="toc-choose-the-action" class="nav-link" data-scroll-target="#choose-the-action">4. Choose the Action:</a></li>
+  <li><a href="#finish-the-task" id="toc-finish-the-task" class="nav-link" data-scroll-target="#finish-the-task">5. Finish the Task:</a></li>
+  <li><a href="#additional-tips" id="toc-additional-tips" class="nav-link" data-scroll-target="#additional-tips">Additional Tips</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -154,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="task-orchestration">Task Orchestration</h2>
 <p>Task orchestration through tools like <code>Crontab</code> or <code>Windows Task Scheduler</code> is useful for automating routine processes and managing system tasks.</p>
 <p>These tools enable users to schedule scripts and other workloads to run automatically at specified times (such as automatic program updates). By automating these tasks, users can ensure critical operations are performed consistently without manual intervention, reducing the risk of human error and freeing up valuable time in both personal and professional environments.</p>
-<p>In this series, we will use crontab to autorun some scraping scripts</p>
+<p>In this article, we will use crontab to autorun the sample meteostat script - which visualizes weather data.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="img/Automation_Icon.png" class="lightbox" data-glightbox="description: .lightbox-desc-1;title:Automation Icon;" data-gallery="quarto-lightbox-gallery-1" title="Automation Icon"><img src="img/Automation_Icon.png" class="img-fluid figure-img" alt="Automation Icon"></a></p>
@@ -164,10 +179,122 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="for-linux" class="level2">
 <h2 class="anchored" data-anchor-id="for-linux">For Linux</h2>
-<p>The below demonstrates placing more than one image in a gallery. Note the usage of the <code>layout-ncol</code> which arranges the images on the page side by date. Adding the <code>group</code> attribute to the markdown images places the images in a gallery grouped together based upon the group name provided.</p>
+<section id="open-terminal" class="level3">
+<h3 class="anchored" data-anchor-id="open-terminal">1. Open Terminal</h3>
+<p>Crontab can be accessed via the terminal using <code>crontab -e</code> to open the crontab menu.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/crontab.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Crontab"><img src="img/crontab.png" class="img-fluid figure-img" alt="Crontab"></a></p>
+<figcaption>Crontab</figcaption>
+</figure>
+</div>
+</section>
+<section id="edit-crontab" class="level3">
+<h3 class="anchored" data-anchor-id="edit-crontab">2. Edit Crontab</h3>
+<p>If doing this for the first time, there’ll be a prompted to select the menu.</p>
+<pre><code>Select an editor. To change later, run 'select-editor'.
+ 1. /bin/nano &lt;---- easiest
+ 2. /usr/bin/vim.basic
+ 3. /usr/bin/vim.tiny
+ 4. /bin/ed
+
+Choose 1-4 [1]:</code></pre>
+<p>Enter 1 to choose /bin/nano.</p>
+<p>Once crontab is set to open with nano, we can pass <code>crontab – e</code> again to view the editor. Scroll to the bottom of the comments and you will be able to set a regular interval and the path to your file.</p>
+</section>
+<section id="add-a-cron-job" class="level3">
+<h3 class="anchored" data-anchor-id="add-a-cron-job">3. Add a Cron Job</h3>
+<p>The five asterisks represent time and date fields:</p>
+<ul>
+<li><p>“*” (minute) - 0-59</p></li>
+<li><p>“*” (hour) - 0-23</p></li>
+<li><p>“*” (day of the month) - 1-31</p></li>
+<li><p>“*” (month) - 1-12</p></li>
+<li><p>“*” (day of the week) - 0-7 (0 and 7 both represent Sunday)</p></li>
+</ul>
+<p>So, for example</p>
+<pre><code>5 10 * * 3 python "/home/Notebook_Projects/WeatherData.py"</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/Crontab2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="CrontabWithCommand"><img src="img/Crontab2.png" class="img-fluid figure-img" alt="CrontabWithCommand"></a></p>
+<figcaption>CrontabWithCommand</figcaption>
+</figure>
+</div>
+<p>The above means that the program at <code>/home/Notebook_Projects/WeatherData.py</code> will be run at 10:05am on every Wednesday (so long as the device is powered on). You can check the correct time using the <a href="&quot;https://crontab.guru&quot;">crontab.guru</a> service. You can find the copy the path from the file explorer.</p>
+</section>
+<section id="save-and-exit" class="level3">
+<h3 class="anchored" data-anchor-id="save-and-exit">4. Save and Exit</h3>
+<p>If you’re using nano, save your changes by pressing CTRL + X, then Y to confirm, and Enter to save.</p>
+</section>
+<section id="verify-cron-jobs" class="level3">
+<h3 class="anchored" data-anchor-id="verify-cron-jobs">5. Verify Cron Jobs</h3>
+<p>To view the current list of cron jobs for the user, use <code>crontab -l</code> from the terminal</p>
+</section>
 </section>
 <section id="for-windows" class="level2">
 <h2 class="anchored" data-anchor-id="for-windows">For Windows</h2>
+<p>To autorun a python file from Windows, you will need a batch file to pass the command automatically into a terminal. In this example, we will use the meteostat demo to visualize max, min and avg temperature.</p>
+<section id="create-a-batch-file" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-batch-file">1. Create a Batch File</h3>
+<ol type="1">
+<li>Open Notepad to write your Batch Script. Pass the path of your py file to the python command to execute the file. For example, let’s create a batch file that downloads weather data:</li>
+</ol>
+<pre><code>python "C:\Users\User1\Desktop\Notebook_Projects\WeatherData.py"</code></pre>
+</section>
+<section id="save-the-batch-file" class="level3">
+<h3 class="anchored" data-anchor-id="save-the-batch-file">2. Save the Batch File:</h3>
+<p>Go to File -&gt; Save As. In the Save as type dropdown, select All Files. Name the file with a <code>.bat</code> extension, for example, <code>AutomatedTask.bat</code>. Save it to a location of your choice. You will need to navigate to it later.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/NotebookBatchFile.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="NotebookBatchFile"><img src="img/NotebookBatchFile.png" class="img-fluid figure-img" alt="NotebookBatchFile"></a></p>
+<figcaption>NotebookBatchFile</figcaption>
+</figure>
+</div>
+</section>
+<section id="schedule-the-batch-file-with-task-scheduler" class="level3">
+<h3 class="anchored" data-anchor-id="schedule-the-batch-file-with-task-scheduler">3. Schedule the Batch File with Task Scheduler</h3>
+<p>Open Task Scheduler and in the right-hand pane, click on <code>Create Basic Task</code>. Name and describe Your Task</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/CreateBasicTask.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="CreateBasicTask"><img src="img/CreateBasicTask.png" class="img-fluid figure-img" alt="CreateBasicTask"></a></p>
+<figcaption>CreateBasicTask</figcaption>
+</figure>
+</div>
+<p>Give your task a name, like “Automatic Python Task”, and add a description if desired.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/CreateBasicTask1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="CreateBasicTask1"><img src="img/CreateBasicTask1.png" class="img-fluid figure-img" alt="CreateBasicTask1"></a></p>
+<figcaption>CreateBasicTask1</figcaption>
+</figure>
+</div>
+<p>Set the <code>Trigger</code>. Choose when you want the task to start. For example, select Daily if you want it to run every day. Click Next, and then set the start date and time.</p>
+<p><img src="img/TriggerTask.png" class="img-fluid" alt="TriggerTask"> <img src="img/TriggerTime.png" class="img-fluid" alt="TriggerTime"></p>
+</section>
+<section id="choose-the-action" class="level3">
+<h3 class="anchored" data-anchor-id="choose-the-action">4. Choose the Action:</h3>
+<p>Select <code>Start a program</code> and click Next. Specify the batch file by navigating to the location of your batch file (C:_Projects.bat.). <img src="img/TaskNavigation.png" class="img-fluid" alt="TaskNavigation"></p>
+</section>
+<section id="finish-the-task" class="level3">
+<h3 class="anchored" data-anchor-id="finish-the-task">5. Finish the Task:</h3>
+<p>Review your settings and click Finish to create the task.</p>
+<p>Check Task Scheduler - your new task will be in the same folder as you had previously stored it.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/TaskScheduled.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="TaskScheduled"><img src="img/TaskScheduled.png" class="img-fluid figure-img" alt="TaskScheduled"></a></p>
+<figcaption>TaskScheduled</figcaption>
+</figure>
+</div>
+<p>Run the Task Manually (Optional): <code>Right-click the task and select Run</code> to test if it executes as expected.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/TaskRunSuccessfully.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="TaskRunSuccessfully"><img src="img/TaskRunSuccessfully.png" class="img-fluid figure-img" alt="TaskRunSuccessfully"></a></p>
+<figcaption>TaskRunSuccessfully</figcaption>
+</figure>
+</div>
+</section>
+<section id="additional-tips" class="level3">
+<h3 class="anchored" data-anchor-id="additional-tips">Additional Tips</h3>
+<p>Running as Administrator: If your script requires administrative privileges, you may need to configure the task to run with the highest privileges. This can be done in the task’s properties under the General tab by checking <code>Run with highest privileges</code>.</p>
 
 
 <div class="hidden" aria-hidden="true">
@@ -175,6 +302,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Automation. <em>credit:</em> <a href="https://www.flaticon.com/free-icon/automation_3417681?term=automation&amp;page=1&amp;position=16&amp;origin=search&amp;related_id=3417681">Flaticon Pack</a></p>
 </div>
 </div>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -756,7 +884,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

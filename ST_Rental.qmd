@@ -23,7 +23,7 @@ In this article, we walk through a practical example of managing and updating a 
    - `hashlib` for hashing, and 
    - a custom script (`ShortTermRental`) to fetch from Toronto's Open Data.
 
-2**Fetching from Toronto's Open Data**
+**Fetching from Toronto's Open Data**
 
 #### Setting Up the Environment
 
@@ -40,48 +40,47 @@ from datetime import datetime, date
 The core of our data process involves an API to retrieve short-term rental data:
 
 1. **Define the API Endpoint:**
-   We first define the base URL for the API provided by the City of Toronto’s [open data portal](https://open.toronto.ca/dataset/short-term-rentals-registration/). The endpoint for accessing data packages is constructed as follows:
-
-   ```
-   base_url = "https://ckan0.cf.opendata.inter.prod-toronto.ca"
-   url = base_url + "/api/3/action/package_show"
-   params = { "id": "short-term-rentals-registration" }
-   ```
+   We first define the base URL for the API provided by the City of Toronto’s [open data portal](https://open.toronto.ca/dataset/short-term-rentals-registration/). Much of this will be provided by the developper tab on the Open Data Portal. Feel free to do a high level request and navigate around the response to find what you may be looking for.
 
 2. **Make the API Call:**
-   We send a GET request using the requests library to the API to retrieve the data package information:
-
-   ```
-   package = requests.get(url, params=params).json()
-   ```
+   We send a GET request using the requests library to the API to retrieve the data package information
 
 3. **Process the Data:**
    The API response contains various resources related to the dataset. We loop through these resources, checking if they are active data stores (`datastore_active`). For each active resource, we fetch the data in CSV format:
 
-   ```
-   df_big = pd.DataFrame()
-   
-   for idx, resource in enumerate(package["result"]["resources"]):
-       if resource["datastore_active"]:
-           url = base_url + "/datastore/dump/" + resource["id"]
-           df_temp = pd.read_csv(url)
-           df_temp['filename'] = url
-           df_temp['first_seen'] = datetime.now().strftime('%Y-%m-%d')
-           df_temp['last_active'] = datetime.now().strftime('%Y-%m-%d')
-           df_big = pd.concat([df_big, df_temp])
-   ```
-
-   Here’s what each step does:
-   - **Fetch CSV Data:** We build up the URL to access the data dump and read it into a pandas DataFrame.
-   - **Add Metadata:** We include additional columns to keep track of the source URL, the date the data was first seen, and the date it was last active. This will be used later to help track registrations across time, and provide metrics
-   - **Concatenate DataFrames:** We combine all the data into a single DataFrame for easier handling.
-
 4. **Return the Data:**
-   Finally, the function returns the combined DataFrame containing all the rental data:
+   Finally, the function returns the combined DataFrame containing all the rental data.
 
-   ```
-   return df_big
-   ```
+```
+def fetch_rental_data():
+    # To hit the API, you'll be making requests to:
+    base_url = "https://ckan0.cf.opendata.inter.prod-toronto.ca"
+        
+    # Datasets are called "packages". Each package can contain many "resources"
+    url = base_url + "/api/3/action/package_show"
+    params = { "id": "short-term-rentals-registration"}
+        
+    package = requests.get(url, params = params).json()
+
+   # Placeholder df to hold the extracted information
+    df_big = pd.DataFrame()
+
+    # To get resource data:
+    for idx, resource in enumerate(package["result"]["resources"]):
+
+        # for datastore_active resources - returns a bool:
+        if resource["datastore_active"]:
+            # To get all records in CSV format:
+            url = base_url + "/datastore/dump/" + resource["id"]
+            
+            df_temp= pd.read_csv(url)
+            df_temp['filename'] = url
+            df_temp['first_seen'] = datetime.now().strftime('%Y-%m-%d')
+            df_temp['last_active'] = datetime.now().strftime('%Y-%m-%d')
+            df_big = pd.concat([df_big,df_temp])
+            
+    return df_big
+```
 
 This  script provides a streamlined approach to fetching and processing short-term rental data. This method is not only applicable to rental data but can be adapted to various other data sources and types. Feel free to browse [Toronto's Open Data Portal](https://open.toronto.ca/) 
 
@@ -126,3 +125,6 @@ This  script provides a streamlined approach to fetching and processing short-te
    Various queries are used to verify that the updates and new entries are correctly reflected in the database. This includes checking for records with updated `last_active` dates and ensuring that the data in `short_term_rentals` matches expectations.
 
 By following these steps, we ensure that our rental data remains current and accurate. This approach can be adapted to manage other types of datasets and databases, demonstrating a powerful method for data integration and management using  and SQLite.
+
+### Visualization
+Once we are able to reliably collect historical information, we can start to visualize the information through Power BI for example

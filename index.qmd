@@ -8,10 +8,10 @@ about:
 
 :::{#me}
 
-I am an MMA Candidate furthering my Machine Learning skills at Rotman currently.
+Currently studying Management Analytics in Toronto. My experience is in retail analytics + viz, demand prediction and lately around applying machine learning to novel business problems.
 
 ## Education
-+ Candidate: Masters of Management Analytics at Rotman School of Management
++ Current: Masters of Management Analytics at Rotman School of Management
 + Bachlors of Business Administration at University of Toronto
 + Undergraduate Exchange at University of Sydney
 
@@ -19,6 +19,7 @@ I am an MMA Candidate furthering my Machine Learning skills at Rotman currently.
 + Data Communicator, Freelance
 + Data Scientist, Indigo Park Canada
 + Data Scientist, The BRIDGE
++ Analytics Engineer, The BRIDGE
 + Digital Insights and Data Analyst, Lactalis Canada
 
 :::

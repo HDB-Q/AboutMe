@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Projects &amp; Blog – Hans’ Portfolio</title>
+<title>Console Values – Hans’ Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -41,6 +41,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -72,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -94,7 +97,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./projects.html" aria-current="page"> 
+    <a class="nav-link" href="./projects.html"> 
 <span class="menu-text">Projects &amp; Blog</span></a>
   </li>  
   <li class="nav-item">
@@ -114,13 +117,26 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-access-values-from-storage" id="toc-why-access-values-from-storage" class="nav-link active" data-scroll-target="#why-access-values-from-storage">Why access values from Storage</a>
+  <ul class="collapse">
+  <li><a href="#json-web-tokens-jwt-and-cookies" id="toc-json-web-tokens-jwt-and-cookies" class="nav-link" data-scroll-target="#json-web-tokens-jwt-and-cookies">JSON Web Tokens (JWT) and Cookies</a></li>
+  </ul></li>
+  <li><a href="#simulating-browser-visits-with-selenium" id="toc-simulating-browser-visits-with-selenium" class="nav-link" data-scroll-target="#simulating-browser-visits-with-selenium">Simulating Browser Visits with Selenium</a></li>
+  <li><a href="#using-saved-values" id="toc-using-saved-values" class="nav-link" data-scroll-target="#using-saved-values">Using saved values</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Projects &amp; Blog</h1>
+<h1 class="title">Console Values</h1>
 </div>
 
 
@@ -137,31 +153,73 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Here are some highlights from my past projects:</p>
-<section id="tracking-short-term-rental-in-toronto" class="level2">
-<h2 class="anchored" data-anchor-id="tracking-short-term-rental-in-toronto"><a href="./ST_Rental.html">Tracking Short Term Rental in Toronto</a></h2>
-<p>This project fetches open data to store in a SQLite Database. Since only active registrations are listed, a database tracks status across time. A unique hash is generated for each address, and compares the differentials to update each location accordingly.</p>
-<p><span class="badge bg-success">Requests</span> <span class="badge bg-success">Hashlib</span> <span class="badge bg-success">SQLite3</span></p>
+<section id="why-access-values-from-storage" class="level2">
+<h2 class="anchored" data-anchor-id="why-access-values-from-storage">Why access values from Storage</h2>
+<p>When a page is initially shown, it may just be static content from the server. Objects like cookies and auth tokens can allow you to acccess more personalized results during browsing. This is common when a site serves search results (specific for a given local area) or for Progressive Web Apps. Being able to access the session or local storage allows for programmatic access to those personalized results when sending requests.</p>
+<section id="json-web-tokens-jwt-and-cookies" class="level3">
+<h3 class="anchored" data-anchor-id="json-web-tokens-jwt-and-cookies">JSON Web Tokens (JWT) and Cookies</h3>
+<p>In those new requests, tokens are often used. Certain requests require authentication and authorization to ensure permissions and similar information. JSON Web Tokens (JWT) and cookies are often employed for this purpose:</p>
+<ul>
+<li><p><b>JSON Web Tokens (JWT)</b>: JWTs are like digital ID cards with an identity and associated permissions. When you log in, the server gives you this token, which you send back with your requests. The server checks the token to confirm you’re allowed to access certain parts of the site. These auth tokens can be used to authenticate and perform actions as if you were logged in. Naturally, this can be misused and caution is urged.</p></li>
+<li><p><b>Cookies</b>: These are small pieces of data stored in the user’s browser, which can also carry authentication information. Cookies can be set to automatically accompany requests to the server when using a browser, but need to be extracted when relying on an explicit request.</p></li>
+</ul>
 </section>
-<section id="simple-task-orchestration" class="level2">
-<h2 class="anchored" data-anchor-id="simple-task-orchestration"><a href="./TaskOrchestration.html">Simple Task Orchestration</a></h2>
-<p>This blog walks through script automation using Task Scheduler and Crontab. These tools can programatically run py files, and others - eliminating manual interactions. Naturally, these work as long as the machine is powered, and thus are best suited for remote VMs running 24/7</p>
-<p><span class="badge bg-success">Crontab</span> <span class="badge bg-success">Windows Task Scheduler</span> <span class="badge bg-success">Batch Files</span></p>
 </section>
-<section id="webscraping-and-accessing-values-from-console" class="level2">
-<h2 class="anchored" data-anchor-id="webscraping-and-accessing-values-from-console"><a href="./ConsoleValues.html">Webscraping and accessing values from console</a></h2>
-<p>Sending AJAX requests to backends may be useful in certain projects, but authentication/bearer/JWT tokens may limit the success of such requests. Thus, this project uses Selenium to simulate a user and extract console values, such as cookies, or bearer tokens.</p>
-<p><span class="badge bg-success">Selenium</span> <span class="badge bg-success">Requests</span></p>
+<section id="simulating-browser-visits-with-selenium" class="level2">
+<h2 class="anchored" data-anchor-id="simulating-browser-visits-with-selenium">Simulating Browser Visits with Selenium</h2>
+<p>When using tools like <code>Selenium</code>, we can simulate actual browser visits and actions, allowing us to perform tasks like logging in to a site, or inputing location data, which generates the necessary cookies and tokens in the browser’s storage. The console allows us to use these cookies and tokens just like a real user would. We may want to extract those and directly send requests with updated and relevant cookies.</p>
 </section>
-<section id="stochastic-oscillator" class="level2">
-<h2 class="anchored" data-anchor-id="stochastic-oscillator">Stochastic Oscillator</h2>
-<p>Stochastic Oscilallators are from a family of technical indicators that can be used to infer buy/sell signals. This project pulls TSX data from yfinance, performs the technical analysis and returns a chart of buy and sell signals. As only historical data is used, thus this project serves as a technical showcase, rather than a tool for recommendations</p>
-<p><span class="badge bg-success">yfinance</span> <span class="badge bg-success">Pandas</span> <span class="badge bg-success">Matplotlib</span></p>
-</section>
-<section id="predicting-e-coli-levels-in-toronto-beaches" class="level2">
-<h2 class="anchored" data-anchor-id="predicting-e-coli-levels-in-toronto-beaches">Predicting E-Coli Levels in Toronto Beaches</h2>
-<p>High E-Coli levels in Toronto’s beaches signals that the water is unsafe, and is closed off to the public. This disrupts water activities including local recreation businesses. This project seeks to train a predictive model to identify future high e-coli levels.</p>
-<p><span class="badge bg-success">Requests</span> <span class="badge bg-success">SKLearn</span> <span class="badge bg-success">Pandas</span></p>
+<section id="using-saved-values" class="level2">
+<h2 class="anchored" data-anchor-id="using-saved-values">Using saved values</h2>
+<p>For example, this retailer serves area specific search results - and the closest location is auto determined and stored in the browser’s cookies. It also occasionally runs other tests and can categorize the user into segments – further personalizing the search results to a profile.</p>
+<p>To programatically access similar search results, we want to recreate the same cookies when sending only a request.</p>
+<p>We observe that the search request reponds with these structured results:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/WalmartSERP.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="SearchResults"><img src="img/WalmartSERP.png" class="img-fluid figure-img" alt="SearchResults"></a></p>
+<figcaption>SearchResults</figcaption>
+</figure>
+</div>
+<p>by using the following (select) cookies:</p>
+<pre><code>cookies = {
+    'userSegment': '40-percent',
+    'wm_route_based_language': 'en-CA',
+    'WM_SEC.AUTH_TOKEN': '██████████████████████████████████████████████████████████████████████████████',
+    'userAppVersion': 'main-1.108.2-04dc79b-0917T0153',
+    '██████.nearestPostalCode': '██████',
+    '██████.nearestLatLng': '"███████,-███████"',
+    'WM.USER_STATE': 'GUEST%7CGuest',
+    'enableHTTPS': '1',
+    'adblocked': 'true'
+}</code></pre>
+<p>A full list can be seen by inspecting the request:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/NetworkCookies.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="CookiesNetwork"><img src="img/NetworkCookies.png" class="img-fluid figure-img" alt="CookiesNetwork"></a></p>
+<figcaption>CookiesNetwork</figcaption>
+</figure>
+</div>
+<p>The console tab can return these values using <code>document.cookie</code>:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/CookieExtract.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="CookieExtract"><img src="img/CookieExtract.png" class="img-fluid figure-img" alt="CookieExtract"></a></p>
+<figcaption>CookieExtract</figcaption>
+</figure>
+</div>
+<p>In practice, we can arrive to a similar set of web results by navigating to the retailer and extracting the storage values:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/Console_Extract.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="ConsoleExtract"><img src="img/Console_Extract.png" class="img-fluid figure-img" alt="ConsoleExtract"></a></p>
+<figcaption>ConsoleExtract</figcaption>
+</figure>
+</div>
+<p>After formatting the cookies from the console into a dict, it is ready to be used in a request fetching personalized results:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/CustomizedSearchWithRequest.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="CustomizedSearchWithRequest"><img src="img/CustomizedSearchWithRequest.png" class="img-fluid figure-img" alt="CustomizedSearchWithRequest"></a></p>
+<figcaption>CustomizedSearchWithRequest</figcaption>
+</figure>
+</div>
 
 
 </section>
@@ -745,6 +803,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","loop":false,"descPosition":"bottom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

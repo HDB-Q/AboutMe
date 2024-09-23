@@ -1,0 +1,61 @@
+---
+title: Console Values
+filters:
+  - lightbox
+lightbox: auto
+---
+
+## Why access values from Storage
+
+ When a page is initially shown, it may just be static content from the server. Objects like cookies and auth tokens can allow you to acccess more personalized results during browsing. This is common when a site serves search results (specific for a given local area) or for Progressive Web Apps. Being able to access the session or local storage allows for programmatic access to those personalized results when sending requests.
+
+### JSON Web Tokens (JWT) and Cookies ### 
+
+In those new requests, tokens are often used. Certain requests require authentication and authorization to ensure permissions and similar information. JSON Web Tokens (JWT) and cookies are often employed for this purpose:
+
+- <b>JSON Web Tokens (JWT)</b>: JWTs are like digital ID cards with an identity and associated permissions. When you log in, the server gives you this token, which you send back with your requests. The server checks the token to confirm you're allowed to access certain parts of the site. These auth tokens can be used to authenticate and perform actions as if you were logged in. Naturally, this can be misused and caution is urged. 
+
+- <b>Cookies</b>: These are small pieces of data stored in the user's browser, which can also carry authentication information. Cookies can be set to automatically accompany requests to the server when using a browser, but need to be extracted when relying on an explicit request.
+
+## Simulating Browser Visits with Selenium ##
+
+When using tools like `Selenium`, we can simulate actual browser visits and actions, allowing us to perform tasks like logging in to a site, or inputing location data, which generates the necessary cookies and tokens in the browser's storage. The console allows us to use these cookies and tokens just like a real user would. We may want to extract those and directly send requests with updated and relevant cookies. 
+
+## Using saved values ##
+For example, this retailer serves area specific search results - and the closest location is auto determined and stored in the browser's cookies. It also occasionally runs other tests and can categorize the user into segments – further personalizing the search results to a profile.
+
+To programatically access similar search results, we want to recreate the same cookies when sending only a request. 
+
+We observe that the search request reponds with these structured results:
+
+![SearchResults](img/WalmartSERP.png)
+
+by using the following (select) cookies:
+```
+cookies = {
+    'userSegment': '40-percent',
+    'wm_route_based_language': 'en-CA',
+    'WM_SEC.AUTH_TOKEN': '██████████████████████████████████████████████████████████████████████████████',
+    'userAppVersion': 'main-1.108.2-04dc79b-0917T0153',
+    '██████.nearestPostalCode': '██████',
+    '██████.nearestLatLng': '"███████,-███████"',
+    'WM.USER_STATE': 'GUEST%7CGuest',
+    'enableHTTPS': '1',
+    'adblocked': 'true'
+}
+```
+A full list can be seen by inspecting the request:
+
+![CookiesNetwork](img/NetworkCookies.png)
+
+The console tab can return these values using `document.cookie`:
+
+![CookieExtract](img/CookieExtract.png)
+
+In practice, we can arrive to a similar set of web results by navigating to the retailer and extracting the storage values:
+
+![ConsoleExtract](img/Console_Extract.png)
+
+After formatting the cookies from the console into a dict, it is ready to be used in a request fetching personalized results:
+
+![CustomizedSearchWithRequest](img/CustomizedSearchWithRequest.png)
