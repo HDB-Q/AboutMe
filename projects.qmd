@@ -3,7 +3,7 @@ title: "Projects & Blog"
 toc: false
 #linkcolor: black
 ---
-Here are some highlights from my past projects: 
+Here are some highlights and interesting finds from my past projects: 
 
 
 ## [Tracking Short Term Rental in Toronto](ST_Rental.qmd)
