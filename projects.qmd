@@ -6,6 +6,12 @@ toc: false
 Here are some highlights and interesting finds from my past projects: 
 
 
+## [Generative Intelligence at EHN Canada](EHN_Project.qmd)
+My team and I build a Gen AI platform for EHN Canada to streamline knowledge retrieval during their admission process. We supplement our chat application with an evaluation framework, and a tool to update their knowledge bases.
+
+<span class="badge bg-success">Large Language Model</span>
+
+
 ## [Tracking Short Term Rental in Toronto](ST_Rental.qmd)
 This project fetches open data to store in a SQLite Database. Since only active registrations are listed, a database tracks status across time. A unique hash is generated for each address, and compares the differentials to update each location accordingly.
 

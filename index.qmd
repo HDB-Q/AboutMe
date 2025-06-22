@@ -3,7 +3,7 @@ title: "A bit about me:"
 about:
   id: me
   template: broadside
-  image: img/profile.png
+  image: img/Headshot-4_edit.png
 ---
 
 :::{#me}
@@ -12,10 +12,12 @@ Currently studying Management Analytics in Toronto. My experience is in retail a
 
 ## Education
 + Current: Masters of Management Analytics at Rotman School of Management
-+ Bachlors of Business Administration at University of Toronto
++ Bachelors of Business Administration at University of Toronto
 + Undergraduate Exchange at University of Sydney
 
 ## Experience
++ Data Scientist Intern, EHN Canada
++ Data Scientist Intern, Canadian Tire
 + Data Communicator, Freelance
 + Data Scientist, Indigo Park Canada
 + Data Scientist, The BRIDGE

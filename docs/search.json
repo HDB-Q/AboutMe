@@ -18,7 +18,7 @@
     "href": "index.html",
     "title": "A bit about me:",
     "section": "",
-    "text": "Currently studying Management Analytics in Toronto. My experience is in retail analytics + viz, demand prediction and lately around applying machine learning to novel business problems.\n\n\n\nCurrent: Masters of Management Analytics at Rotman School of Management\nBachlors of Business Administration at University of Toronto\nUndergraduate Exchange at University of Sydney\n\n\n\n\n\nData Communicator, Freelance\nData Scientist, Indigo Park Canada\nData Scientist, The BRIDGE\nAnalytics Engineer, The BRIDGE\nDigital Insights and Data Analyst, Lactalis Canada\nThanks for checking out my web site!"
+    "text": "Currently studying Management Analytics in Toronto. My experience is in retail analytics + viz, demand prediction and lately around applying machine learning to novel business problems.\n\n\n\nCurrent: Masters of Management Analytics at Rotman School of Management\nBachelors of Business Administration at University of Toronto\nUndergraduate Exchange at University of Sydney\n\n\n\n\n\nData Scientist Intern, EHN Canada\nData Scientist Intern, Canadian Tire\nData Communicator, Freelance\nData Scientist, Indigo Park Canada\nData Scientist, The BRIDGE\nAnalytics Engineer, The BRIDGE\nDigital Insights and Data Analyst, Lactalis Canada\nThanks for checking out my web site!"
   },
   {
     "objectID": "index.html#goals",
@@ -32,14 +32,14 @@
     "href": "index.html#education",
     "title": "A bit about me:",
     "section": "",
-    "text": "Current: Masters of Management Analytics at Rotman School of Management\nBachlors of Business Administration at University of Toronto\nUndergraduate Exchange at University of Sydney"
+    "text": "Current: Masters of Management Analytics at Rotman School of Management\nBachelors of Business Administration at University of Toronto\nUndergraduate Exchange at University of Sydney"
   },
   {
     "objectID": "projects.html",
     "href": "projects.html",
     "title": "Projects & Blog",
     "section": "",
-    "text": "Here are some highlights from my past projects:"
+    "text": "Here are some highlights and interesting finds from my past projects:"
   },
   {
     "objectID": "projects.html#project-1",
@@ -137,7 +137,7 @@
     "href": "index.html#experience",
     "title": "A bit about me:",
     "section": "",
-    "text": "Data Communicator, Freelance\nData Scientist, Indigo Park Canada\nData Scientist, The BRIDGE\nAnalytics Engineer, The BRIDGE\nDigital Insights and Data Analyst, Lactalis Canada"
+    "text": "Data Scientist Intern, EHN Canada\nData Scientist Intern, Canadian Tire\nData Communicator, Freelance\nData Scientist, Indigo Park Canada\nData Scientist, The BRIDGE\nAnalytics Engineer, The BRIDGE\nDigital Insights and Data Analyst, Lactalis Canada"
   },
   {
     "objectID": "newproject.html",
@@ -348,5 +348,61 @@
     "title": "Console Values",
     "section": "Simulating Browser Visits with Selenium",
     "text": "Simulating Browser Visits with Selenium\nWhen using tools like Selenium, we can simulate actual browser visits and actions, allowing us to perform tasks like logging in to a site, or inputing location data, which generates the necessary cookies and tokens in the browser’s storage. The console allows us to use these cookies and tokens just like a real user would. We may want to extract those and directly send requests with updated and relevant cookies."
+  },
+  {
+    "objectID": "projects.html#generative-intelligence-at-ehn-canada",
+    "href": "projects.html#generative-intelligence-at-ehn-canada",
+    "title": "Projects & Blog",
+    "section": "Generative Intelligence at EHN Canada",
+    "text": "Generative Intelligence at EHN Canada\nThis project fetches open data to store in a SQLite Database. Since only active registrations are listed, a database tracks status across time. A unique hash is generated for each address, and compares the differentials to update each location accordingly.\nLarge Language Model"
+  },
+  {
+    "objectID": "EHN_Project.html",
+    "href": "EHN_Project.html",
+    "title": "EHN Project",
+    "section": "",
+    "text": "Lynn Liu, Hans Bisoo, and Timothy Williams are part of the final EHN Canada team. EHN Canada specializes in treating all types of addictions and related mental health concerns including depression, anxiety, trauma and PTSD, and eating disorders\nWe were tasked to optimize a bottleneck facing the Admissions Team, who field 10,000+ inquiries per month via discovery dialogue. Information retrieval during that process requires the appropriate medical background as well as EHN’s offerings and nuances.\nWe built an AI Platform to support a real-time chat bot for internal use that draws from internal knowledge bases and a simple platform to handle knowledge base updates. Evaluations using DeepEval were instrumental in building the continuous integration pipeline, as well as selecting our software defaults. Our AI platform is build on open-source tools and uses local models."
+  },
+  {
+    "objectID": "EHN_Project.html#task-orchestration",
+    "href": "EHN_Project.html#task-orchestration",
+    "title": "EHN_Project",
+    "section": "",
+    "text": "Task orchestration through tools like Crontab or Windows Task Scheduler is useful for automating routine processes and managing system tasks.\nThese tools enable users to schedule scripts and other workloads to run automatically at specified times (such as automatic program updates). By automating these tasks, users can ensure critical operations are performed consistently without manual intervention, reducing the risk of human error and freeing up valuable time in both personal and professional environments.\nIn this article, we will use crontab to autorun the sample meteostat script - which visualizes weather data.\n\n\n\nAutomation Icon"
+  },
+  {
+    "objectID": "EHN_Project.html#for-linux",
+    "href": "EHN_Project.html#for-linux",
+    "title": "EHN_Project",
+    "section": "For Linux",
+    "text": "For Linux\n\n1. Open Terminal\nCrontab can be accessed via the terminal using crontab -e to open the crontab menu.\n\n\n\nCrontab\n\n\n\n\n2. Edit Crontab\nIf doing this for the first time, there’ll be a prompted to select the menu.\nSelect an editor. To change later, run 'select-editor'.\n 1. /bin/nano &lt;---- easiest\n 2. /usr/bin/vim.basic\n 3. /usr/bin/vim.tiny\n 4. /bin/ed\n\nChoose 1-4 [1]:\nEnter 1 to choose /bin/nano.\nOnce crontab is set to open with nano, we can pass crontab – e again to view the editor. Scroll to the bottom of the comments and you will be able to set a regular interval and the path to your file.\n\n\n3. Add a Cron Job\nThe five asterisks represent time and date fields:\n\n“*” (minute) - 0-59\n“*” (hour) - 0-23\n“*” (day of the month) - 1-31\n“*” (month) - 1-12\n“*” (day of the week) - 0-7 (0 and 7 both represent Sunday)\n\nSo, for example\n5 10 * * 3 python \"/home/Notebook_Projects/WeatherData.py\"\n\n\n\nCrontabWithCommand\n\n\nThe above means that the program at /home/Notebook_Projects/WeatherData.py will be run at 10:05am on every Wednesday (so long as the device is powered on). You can check the correct time using the crontab.guru service. You can find the copy the path from the file explorer.\n\n\n4. Save and Exit\nIf you’re using nano, save your changes by pressing CTRL + X, then Y to confirm, and Enter to save.\n\n\n5. Verify Cron Jobs\nTo view the current list of cron jobs for the user, use crontab -l from the terminal"
+  },
+  {
+    "objectID": "EHN_Project.html#for-windows",
+    "href": "EHN_Project.html#for-windows",
+    "title": "EHN_Project",
+    "section": "For Windows",
+    "text": "For Windows\nTo autorun a python file from Windows, you will need a batch file to pass the command automatically into a terminal. In this example, we will use the meteostat demo to visualize max, min and avg temperature.\n\n1. Create a Batch File\n\nOpen Notepad to write your Batch Script. Pass the path of your py file to the python command to execute the file. For example, let’s create a batch file that downloads weather data:\n\npython \"C:\\Users\\User1\\Desktop\\Notebook_Projects\\WeatherData.py\"\n\n\n2. Save the Batch File:\nGo to File -&gt; Save As. In the Save as type dropdown, select All Files. Name the file with a .bat extension, for example, AutomatedTask.bat. Save it to a location of your choice. You will need to navigate to it later.\n\n\n\nNotebookBatchFile\n\n\n\n\n3. Schedule the Batch File with Task Scheduler\nOpen Task Scheduler and in the right-hand pane, click on Create Basic Task. Name and describe Your Task\n\n\n\nCreateBasicTask\n\n\nGive your task a name, like “Automatic Python Task”, and add a description if desired.\n\n\n\nCreateBasicTask1\n\n\nSet the Trigger. Choose when you want the task to start. For example, select Daily if you want it to run every day. Click Next, and then set the start date and time.\n \n\n\n4. Choose the Action:\nSelect Start a program and click Next. Specify the batch file by navigating to the location of your batch file (C:_Projects.bat.). \n\n\n5. Finish the Task:\nReview your settings and click Finish to create the task.\nCheck Task Scheduler - your new task will be in the same folder as you had previously stored it.\n\n\n\nTaskScheduled\n\n\nRun the Task Manually (Optional): Right-click the task and select Run to test if it executes as expected.\n\n\n\nTaskRunSuccessfully\n\n\n\n\nAdditional Tips\nRunning as Administrator: If your script requires administrative privileges, you may need to configure the task to run with the highest privileges. This can be done in the task’s properties under the General tab by checking Run with highest privileges.\n\n\n\n\nAutomation. credit: Flaticon Pack"
+  },
+  {
+    "objectID": "EHN_Project.html#meet-the-team",
+    "href": "EHN_Project.html#meet-the-team",
+    "title": "EHN Project",
+    "section": "",
+    "text": "Lynn Liu, Hans Bisoo, and Timothy Williams are part of the final EHN Canada team. EHN Canada specializes in treating all types of addictions and related mental health concerns including depression, anxiety, trauma and PTSD, and eating disorders\nWe were tasked to optimize a bottleneck facing the Admissions Team, who field 10,000+ inquiries per month via discovery dialogue. Information retrieval during that process requires the appropriate medical background as well as EHN’s offerings and nuances.\nWe built an AI Platform to support a real-time chat bot for internal use that draws from internal knowledge bases and a simple platform to handle knowledge base updates. Evaluations using DeepEval were instrumental in building the continuous integration pipeline, as well as selecting our software defaults. Our AI platform is build on open-source tools and uses local models."
+  },
+  {
+    "objectID": "EHN_Project.html#task",
+    "href": "EHN_Project.html#task",
+    "title": "EHN Project",
+    "section": "Task",
+    "text": "Task\n\n\n\n\n“LinkedIn"
+  },
+  {
+    "objectID": "EHN_Project.html#ad",
+    "href": "EHN_Project.html#ad",
+    "title": "EHN Project",
+    "section": "ad",
+    "text": "ad"
   }
 ]

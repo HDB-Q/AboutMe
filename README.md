@@ -1,4 +1,4 @@
-## Testing Github Pages for Projects and Blog
+## Github site for projects
 
-# Quarto Template from 
+# Quarto Template from  Joyce Robbins 
 [Video tutorial](https://youtu.be/YN75YXaLFGM)
