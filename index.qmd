@@ -8,7 +8,7 @@ about:
 
 :::{#me}
 
-Currently studying Management Analytics in Toronto. My experience is in retail analytics + viz, demand prediction and lately around applying machine learning to novel business problems.
+I am currently studying Management Analytics in Toronto. My experience is in retail analytics + data visualization, demand prediction and lately around applying machine learning to novel business problems.
 
 ## Education
 + Current: Masters of Management Analytics at Rotman School of Management
