@@ -354,7 +354,7 @@
     "href": "projects.html#generative-intelligence-at-ehn-canada",
     "title": "Projects & Blog",
     "section": "Generative Intelligence at EHN Canada",
-    "text": "Generative Intelligence at EHN Canada\nThis project fetches open data to store in a SQLite Database. Since only active registrations are listed, a database tracks status across time. A unique hash is generated for each address, and compares the differentials to update each location accordingly.\nLarge Language Model"
+    "text": "Generative Intelligence at EHN Canada\nMy team and I build a Gen AI platform for EHN Canada to streamline knowledge retrieval during their admission process. We supplement our chat application with an evaluation framework, and a tool to update their knowledge bases.\nLarge Language Model"
   },
   {
     "objectID": "EHN_Project.html",
