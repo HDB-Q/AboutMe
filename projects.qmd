@@ -6,7 +6,7 @@ toc: false
 Here are some highlights and interesting finds from my past projects: 
 
 
-## [Generative Intelligence at EHN Canada](EHN_Project.qmd)
+## [Optimizing Admissions at EHN Canada with AI](EHN_Project.qmd)
 My team and I build a Gen AI platform for EHN Canada to streamline knowledge retrieval during their admission process. We supplement our chat application with an evaluation framework, and a tool to update their knowledge bases.
 
 <span class="badge bg-success">Large Language Model</span>

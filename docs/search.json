@@ -359,9 +359,9 @@
   {
     "objectID": "EHN_Project.html",
     "href": "EHN_Project.html",
-    "title": "EHN Project",
+    "title": "Optimizing Admissions at EHN Canada with AI",
     "section": "",
-    "text": "Lynn Liu, Hans Bisoo, and Timothy Williams are part of the final EHN Canada team. EHN Canada specializes in treating all types of addictions and related mental health concerns including depression, anxiety, trauma and PTSD, and eating disorders.\nWe were tasked to optimize a bottleneck facing the Admissions Team, who field 10,000+ inquiries per month via discovery dialogue. Information retrieval during that process requires the appropriate medical background as well as EHN’s offerings and nuances.\nWe built an AI Platform to support a real-time chat bot for internal use that draws from internal knowledge bases and a simple platform to handle knowledge base updates. Evaluations using DeepEval were instrumental in building the continuous integration pipeline, as well as selecting our software defaults. Our AI platform is build on open-source tools and uses local models.\n\nEdgewood Health Network"
+    "text": "Hans Bisoo \nLynn Liu \nTimmy Williams \n\n\n\nAs part of the final EHN Canada AI team, we were engaged by EHN Canada, a national leader in addictions and mental health treatment - including depression, anxiety, trauma and PTSD.\nEHN’s mission-driven care spans several specialized programs, and they interact with over 10,000 inquiries per month through its Admissions Team alone.\nOur challenge was to identify and optimize a bottleneck in the discovery dialogue process used by the Admissions Team. These high-volume, often time-sensitive conversations require accurate and empathetic responses, crafted from both clinical knowledge and the specific offerings and nuances of EHN’s programs. Given the scale and complexity, the team needed a more efficient way to retrieve internal knowledge during live interactions.\n\nWe designed and developed an LLM Platform to augment internal admissions workflows. At its core is a real-time chatbot, trained on EHN’s internal knowledge bases and optimized for internal use. The system includes a simple interface for updating the knowledge base, allowing non-technical staff to keep content current without relying on developers.\nTo ensure reliability and alignment with internal needs, we integrated DeepEval as part of our continuous evaluation pipeline. This helped us quantify metrics (hallucination, bias, accuracy), test retrieval performance, and select default models that were both efficient and accurate. Our platform leverages open-source tools and locally-hosted models, reflecting our commitment to privacy, transparency, and long-term maintainability.\nThe result is a scalable, secure, and customizable AI support layer for EHN’s Admissions Team—reducing information retrieval friction, increasing consistency across staff responses, and freeing up the admissions staff to focus on high-empathy, high-impact conversations.\nEdgewood Health Network"
   },
   {
     "objectID": "EHN_Project.html#task-orchestration",
@@ -387,9 +387,9 @@
   {
     "objectID": "EHN_Project.html#meet-the-team",
     "href": "EHN_Project.html#meet-the-team",
-    "title": "EHN Project",
-    "section": "",
-    "text": "Lynn Liu, Hans Bisoo, and Timothy Williams are part of the final EHN Canada team. EHN Canada specializes in treating all types of addictions and related mental health concerns including depression, anxiety, trauma and PTSD, and eating disorders.\nWe were tasked to optimize a bottleneck facing the Admissions Team, who field 10,000+ inquiries per month via discovery dialogue. Information retrieval during that process requires the appropriate medical background as well as EHN’s offerings and nuances.\nWe built an AI Platform to support a real-time chat bot for internal use that draws from internal knowledge bases and a simple platform to handle knowledge base updates. Evaluations using DeepEval were instrumental in building the continuous integration pipeline, as well as selecting our software defaults. Our AI platform is build on open-source tools and uses local models.\n\nEdgewood Health Network"
+    "title": "Optimizing Admissions at EHN Canada with AI",
+    "section": "Meet the Team",
+    "text": "Meet the Team\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHans Bisoo \nLynn Liu \nTimmy Williams"
   },
   {
     "objectID": "EHN_Project.html#task",
@@ -404,5 +404,26 @@
     "title": "EHN Project",
     "section": "ad",
     "text": "ad"
+  },
+  {
+    "objectID": "EHN_Project.html#meet-the-team-1",
+    "href": "EHN_Project.html#meet-the-team-1",
+    "title": "EHN Project",
+    "section": "Meet the Team",
+    "text": "Meet the Team\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHans Bisoo \nLynn Liu \nTimmy Williams \n\n\n\nWe are part of the final EHN Canada team. EHN Canada specializes in treating all types of addictions and related mental health concerns including depression, anxiety, trauma and PTSD, and eating disorders.\nWe were tasked to optimize a bottleneck facing the Admissions Team, who field 10,000+ inquiries per month via discovery dialogue. Information retrieval during that process requires the appropriate medical background as well as EHN’s offerings and nuances.\nWe built an AI Platform to support a real-time chat bot for internal use that draws from internal knowledge bases and a simple platform to handle knowledge base updates. Evaluations using DeepEval were instrumental in building the continuous integration pipeline, as well as selecting our software defaults. Our AI platform is build on open-source tools and uses local models.\n\nEdgewood Health Network"
+  },
+  {
+    "objectID": "EHN_Project.html#optimizing-admissions-at-ehn-canada-with-ai",
+    "href": "EHN_Project.html#optimizing-admissions-at-ehn-canada-with-ai",
+    "title": "Optimizing Admissions at EHN Canada with AI",
+    "section": "Optimizing Admissions at EHN Canada with AI",
+    "text": "Optimizing Admissions at EHN Canada with AI\nSITUATION As part of the final EHN Canada AI team, we were engaged by EHN Canada, a national leader in the treatment of addictions and related mental health concerns, including depression, anxiety, trauma and PTSD, and eating disorders. EHN’s mission-driven care spans several specialized programs, and its teams interact with over 10,000 inquiries per month through its Admissions Team alone.\nTASK Our challenge was to identify and optimize a critical bottleneck in the discovery dialogue process used by the Admissions Team. These high-volume, often time-sensitive conversations require accurate and empathetic responses—drawing from both clinical knowledge and the specific offerings and nuances of EHN’s programs. Given the scale and complexity, the team needed a more efficient way to retrieve internal knowledge during live interactions.\nACTION We designed and developed an AI Platform to augment internal admissions workflows. At its core is a real-time chatbot, trained on EHN’s internal knowledge bases and optimized for internal use. The system includes a simple interface for updating the knowledge base, allowing non-technical staff to keep content current without relying on developers. To ensure reliability and alignment with internal needs, we integrated DeepEval as part of our continuous evaluation pipeline. This helped us refine prompt design, test retrieval performance, and select default models that were both efficient and accurate. Our platform leverages open-source tools and locally-hosted models, reflecting our commitment to privacy, transparency, and long-term maintainability.\nRESULT The result is a scalable, secure, and customizable AI support layer for EHN’s Admissions Team—reducing information retrieval friction, increasing consistency across staff responses, and freeing up human advisors to focus on high-empathy, high-impact conversations. The platform is now a foundation for future AI integrations across EHN Canada’s operations.\n\nLet me know if you want a shorter version for a slide, resume, or portfolio blurb!\n\nEdgewood Health Network"
+  },
+  {
+    "objectID": "EHN_Project.html#project-brief",
+    "href": "EHN_Project.html#project-brief",
+    "title": "Optimizing Admissions at EHN Canada with AI",
+    "section": "Project Brief",
+    "text": "Project Brief\nAs part of the final EHN Canada AI team, we were engaged by EHN Canada, a national leader in addictions and mental health treatment - including depression, anxiety, trauma and PTSD.\nEHN’s mission-driven care spans several specialized programs, and they interact with over 10,000 inquiries per month through its Admissions Team alone.\nOur challenge was to identify and optimize a bottleneck in the discovery dialogue process used by the Admissions Team. These high-volume, often time-sensitive conversations require accurate and empathetic responses, crafted from both clinical knowledge and the specific offerings and nuances of EHN’s programs. Given the scale and complexity, the team needed a more efficient way to retrieve internal knowledge during live interactions.\nWe designed and developed an LLM Platform to augment internal admissions workflows. At its core is a real-time chatbot, trained on EHN’s internal knowledge bases and optimized for internal use. The system includes a simple interface for updating the knowledge base, allowing non-technical staff to keep content current without relying on developers.\nTo ensure reliability and alignment with internal needs, we integrated DeepEval as part of our continuous evaluation pipeline. This helped us quantify metrics (hallucination, bias, accuracy), test retrieval performance, and select default models that were both efficient and accurate. Our platform leverages open-source tools and locally-hosted models, reflecting our commitment to privacy, transparency, and long-term maintainability.\nThe result is a scalable, secure, and customizable AI support layer for EHN’s Admissions Team—reducing information retrieval friction, increasing consistency across staff responses, and freeing up the admissions staff to focus on high-empathy, high-impact conversations."
   }
 ]
