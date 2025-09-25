@@ -1,0 +1,12 @@
+---
+title: Resources
+filters:
+  - lightbox
+lightbox: auto
+---
+
+## Useful Resources
+
+You can download the ISLR-Python PDF by clicking the link below:
+
+[Download the PDF here](img\Python_ISLR.pdf)

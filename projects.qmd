@@ -46,3 +46,8 @@ High E-Coli levels in Toronto's beaches signals that the water is unsafe, and is
 <span class="badge bg-success">Requests</span>
 <span class="badge bg-success">SKLearn</span>
 <span class="badge bg-success">Pandas</span>
+
+## [Additional Resources](Additional_Resources.qmd)
+Useful links and guides.
+
+<span class="badge bg-success">Misc</span>
