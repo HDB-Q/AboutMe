@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Resources – Hans’ Portfolio</title>
+<title>SQL Overview – Hans’ Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -148,22 +148,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#useful-resources" id="toc-useful-resources" class="nav-link active" data-scroll-target="#useful-resources">Useful Resources</a></li>
-  <li><a href="#useful-snippets" id="toc-useful-snippets" class="nav-link" data-scroll-target="#useful-snippets">Useful Snippets</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Resources</h1>
+<h1 class="title">SQL Overview</h1>
 </div>
 
 
@@ -180,43 +173,170 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="useful-resources" class="level2">
-<h2 class="anchored" data-anchor-id="useful-resources">Useful Resources</h2>
-<p>You can download the ISLR-Python PDF by clicking the link below:</p>
-<p><a href="img\Python_ISLR.pdf">Download the PDF here</a></p>
+<p>SQL (Structured Query Language) is the backbone of working with relational databases, allowing us to manage and manipulate data efficiently. As data becomes more complex, mastering SQL’s advanced features is key to improving the quality and efficiency of your queries. In this blog, we’ll dive into some of the most commonly used SQL commands that help streamline your data manipulation tasks.</p>
+<section id="common-table-expressions-ctes" class="level4">
+<h4 class="anchored" data-anchor-id="common-table-expressions-ctes">1. Common Table Expressions (CTEs)</h4>
+<p>A Common Table Expression (CTE) is a temporary result set that you can reference within a <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, or <code>DELETE</code> statement. CTEs are useful for breaking down complex queries into simpler, more readable parts. They also improve query performance in some cases by allowing reusability of subqueries.</p>
+<section id="example" class="level5">
+<h5 class="anchored" data-anchor-id="example">Example:</h5>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> DepartmentCTE <span class="kw">AS</span> (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> DepartmentID, DepartmentName</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> Departments</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> DepartmentID <span class="kw">IN</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Employees</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> DepartmentID <span class="kw">IN</span> (<span class="kw">SELECT</span> DepartmentID <span class="kw">FROM</span> DepartmentCTE);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, the CTE simplifies the query by isolating the logic that retrieves department information. We can then use the result of the CTE in the main query.</p>
 </section>
-<section id="useful-snippets" class="level2">
-<h2 class="anchored" data-anchor-id="useful-snippets">Useful Snippets</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> QuickView(df):</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">    # Quick Data View Function to show columns, nulls,type and missing percentage in a dataframe",</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Number of Null values for each column</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    Nnull <span class="op">=</span> pd.DataFrame(data<span class="op">=</span>df.isnull().<span class="bu">sum</span>(), columns<span class="op">=</span>[<span class="st">'Nnull'</span>])</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Number of Unique Values for each column\</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    Nunique <span class="op">=</span> pd.DataFrame(data<span class="op">=</span>df.nunique(), columns<span class="op">=</span>[<span class="st">'Nunique'</span>])</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    Nunique[<span class="st">'Total Rows'</span>] <span class="op">=</span> df.shape[<span class="dv">0</span>]</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Dtype for each column</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    Dtype <span class="op">=</span> pd.DataFrame(data<span class="op">=</span>df.dtypes, columns<span class="op">=</span>[<span class="st">'Dtype'</span>])</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># MissingRate for each column</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    MissingRate <span class="op">=</span> pd.DataFrame(data <span class="op">=</span> df.isnull().<span class="bu">sum</span>()<span class="op">/</span>df.shape[<span class="dv">0</span>], columns<span class="op">=</span>[<span class="st">'MissingRate'</span>])</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Sample</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    SampleValue <span class="op">=</span> pd.DataFrame(data<span class="op">=</span> df.sample().<span class="bu">sum</span>(), columns <span class="op">=</span> [<span class="st">'Sample'</span>])</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Descriptive stats for numerical columns</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    Des <span class="op">=</span> pd.DataFrame(data <span class="op">=</span> df.describe().T)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add more here, if you want to have quickview before you access to the further analysis\n",</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Concat all columns you want</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    DataQuickview <span class="op">=</span> pd.concat([Nnull,Nunique,MissingRate, Dtype, SampleValue], axis <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>     <span class="co"># Object volumns don't have a description</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    DataQuickview <span class="op">=</span> DataQuickview.replace(np.NaN,<span class="st">'na'</span>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(DataQuickview)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="views" class="level4">
+<h4 class="anchored" data-anchor-id="views">2. Views</h4>
+<p>A View is a virtual table created by a <code>SELECT</code> query. It’s a stored query that you can treat like a regular table. Views are great for simplifying complex queries or reusing logic across different parts of your application. Unlike CTEs, views are persistent and stored in the database schema.</p>
+<section id="example-1" class="level5">
+<h5 class="anchored" data-anchor-id="example-1">Example:</h5>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> ActiveEmployees <span class="kw">AS</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> EmployeeID, FirstName, LastName</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Employees</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> Status <span class="op">=</span> <span class="st">'Active'</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can now query <code>ActiveEmployees</code> as if it were a regular table:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> ActiveEmployees;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="cte-in-select-statements" class="level4">
+<h4 class="anchored" data-anchor-id="cte-in-select-statements">3. CTE in SELECT Statements</h4>
+<p>You can use CTEs directly within <code>SELECT</code> statements to organize data or transform it before final output. This is particularly useful when you need to break down large data sets into smaller, manageable pieces.</p>
+<section id="example-2" class="level5">
+<h5 class="anchored" data-anchor-id="example-2">Example:</h5>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> SalesCTE <span class="kw">AS</span> (</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> EmployeeID, <span class="fu">SUM</span>(SalesAmount) <span class="kw">AS</span> TotalSales</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> Sales</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> EmployeeID</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> e.EmployeeName, s.TotalSales</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Employees e</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> SalesCTE s <span class="kw">ON</span> e.EmployeeID <span class="op">=</span> s.EmployeeID;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here, the CTE calculates the total sales per employee, which is then joined with the employee details for the final output.</p>
+</section>
+</section>
+<section id="rank-over-and-partition" class="level4">
+<h4 class="anchored" data-anchor-id="rank-over-and-partition">4. Rank(), OVER(), and PARTITION</h4>
+<p>The <code>RANK()</code> function is used to assign a rank to each row within a partition of a result set. The <code>OVER()</code> clause defines how the rows are grouped and ordered. When combined with <code>PARTITION BY</code>, it divides the dataset into partitions to rank data separately for each group.</p>
+<section id="example-3" class="level5">
+<h5 class="anchored" data-anchor-id="example-3">Example:</h5>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> EmployeeID, SalesAmount,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">RANK</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> DepartmentID <span class="kw">ORDER</span> <span class="kw">BY</span> SalesAmount <span class="kw">DESC</span>) <span class="kw">AS</span> <span class="fu">Rank</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, employees are ranked within their department based on sales, with the highest sales getting a rank of 1.</p>
+</section>
+</section>
+<section id="ntile" class="level4">
+<h4 class="anchored" data-anchor-id="ntile">5. NTILE</h4>
+<p>The <code>NTILE()</code> function divides the result set into a specified number of buckets (tiles). Each row is assigned a bucket number based on the ordering criteria.</p>
+<section id="example-4" class="level5">
+<h5 class="anchored" data-anchor-id="example-4">Example:</h5>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> EmployeeID, SalesAmount,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">NTILE</span>(<span class="dv">4</span>) <span class="kw">OVER</span> (<span class="kw">ORDER</span> <span class="kw">BY</span> SalesAmount <span class="kw">DESC</span>) <span class="kw">AS</span> Quartile</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This query divides employees into 4 quartiles based on their sales performance.</p>
+</section>
+</section>
+<section id="lag" class="level4">
+<h4 class="anchored" data-anchor-id="lag">6. LAG</h4>
+<p>The <code>LAG()</code> function allows you to access data from a previous row in the result set. It’s useful for comparing values from different rows in a result set without using self-joins.</p>
+<section id="example-5" class="level5">
+<h5 class="anchored" data-anchor-id="example-5">Example:</h5>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> EmployeeID, SalesAmount,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">LAG</span>(SalesAmount, <span class="dv">1</span>) <span class="kw">OVER</span> (<span class="kw">ORDER</span> <span class="kw">BY</span> SalesAmount) <span class="kw">AS</span> PreviousSales</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This query shows the current and previous sales amount for each employee.</p>
+</section>
+</section>
+<section id="ifnull" class="level4">
+<h4 class="anchored" data-anchor-id="ifnull">7. IFNULL</h4>
+<p>The <code>IFNULL()</code> function is used to replace <code>NULL</code> values with a specified value. It’s typically used when you want to ensure that your results are not affected by missing or incomplete data.</p>
+<section id="example-6" class="level5">
+<h5 class="anchored" data-anchor-id="example-6">Example:</h5>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> EmployeeID, IFNULL(SalesAmount, <span class="dv">0</span>) <span class="kw">AS</span> SalesAmount</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This query replaces any <code>NULL</code> sales amounts with <code>0</code>.</p>
+</section>
+</section>
+<section id="coalesce" class="level4">
+<h4 class="anchored" data-anchor-id="coalesce">8. COALESCE</h4>
+<p>The <code>COALESCE()</code> function returns the first non-NULL value in a list of expressions. It’s a more flexible alternative to <code>IFNULL()</code> because it can handle multiple potential values.</p>
+<section id="example-7" class="level5">
+<h5 class="anchored" data-anchor-id="example-7">Example:</h5>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> EmployeeID, <span class="fu">COALESCE</span>(PhoneNumber, Email, <span class="st">'No contact information'</span>) <span class="kw">AS</span> ContactInfo</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Employees;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, if the <code>PhoneNumber</code> is <code>NULL</code>, the query will check the <code>Email</code>, and if both are <code>NULL</code>, it will display <code>'No contact information'</code>.</p>
+</section>
+</section>
+<section id="joins" class="level4">
+<h4 class="anchored" data-anchor-id="joins">9. Joins</h4>
+<p>Joins are used to combine rows from two or more tables based on a related column. The most common types of joins are <code>INNER JOIN</code>, <code>LEFT JOIN</code>, <code>RIGHT JOIN</code>, and <code>FULL OUTER JOIN</code>.</p>
+<section id="example-8" class="level5">
+<h5 class="anchored" data-anchor-id="example-8">Example:</h5>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> e.EmployeeID, e.EmployeeName, d.DepartmentName</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Employees e</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> Departments d <span class="kw">ON</span> e.DepartmentID <span class="op">=</span> d.DepartmentID;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This query performs an <code>INNER JOIN</code> between the <code>Employees</code> and <code>Departments</code> tables to return employee names along with their respective department names.</p>
+</section>
+</section>
+<section id="substr" class="level4">
+<h4 class="anchored" data-anchor-id="substr">10. SUBSTR</h4>
+<p>The <code>SUBSTR()</code> function is used to extract a substring from a string based on a starting position and length.</p>
+<section id="example-9" class="level5">
+<h5 class="anchored" data-anchor-id="example-9">Example:</h5>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> EmployeeName, <span class="fu">SUBSTR</span>(EmployeeName, <span class="dv">1</span>, <span class="dv">3</span>) <span class="kw">AS</span> FirstThreeChars</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Employees;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This query returns the first three characters of each employee’s name.</p>
+</section>
+</section>
+<section id="instr" class="level4">
+<h4 class="anchored" data-anchor-id="instr">11. INSTR</h4>
+<p>The <code>INSTR()</code> function returns the position of the first occurrence of a substring within a string. It can be used to find the location of specific characters or words in a column.</p>
+<section id="example-10" class="level5">
+<h5 class="anchored" data-anchor-id="example-10">Example:</h5>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> EmployeeName, <span class="fu">INSTR</span>(EmployeeName, <span class="st">'John'</span>) <span class="kw">AS</span> Position</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Employees;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this query, the <code>INSTR()</code> function returns the position of the substring <code>'John'</code> in each employee’s name.</p>
+</section>
+</section>
+<section id="length" class="level4">
+<h4 class="anchored" data-anchor-id="length">12. Length</h4>
+<p>The <code>LENGTH()</code> function returns the number of characters in a string.</p>
+<section id="example-11" class="level5">
+<h5 class="anchored" data-anchor-id="example-11">Example:</h5>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> EmployeeName, <span class="fu">LENGTH</span>(EmployeeName) <span class="kw">AS</span> NameLength</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Employees;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This query returns the length of each employee’s name.</p>
+</section>
+</section>
+<section id="cast" class="level4">
+<h4 class="anchored" data-anchor-id="cast">13. CAST</h4>
+<p>The <code>CAST()</code> function is used to convert a value from one data type to another. This is particularly useful when you need to ensure data is in the right format for calculations or comparisons.</p>
+<section id="example-12" class="level5">
+<h5 class="anchored" data-anchor-id="example-12">Example:</h5>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">CAST</span>(SalesAmount <span class="kw">AS</span> <span class="dt">DECIMAL</span>(<span class="dv">10</span>, <span class="dv">2</span>)) <span class="kw">AS</span> SalesAmountFormatted</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This converts the <code>SalesAmount</code> to a decimal with two decimal places.</p>
+</section>
+</section>
+<section id="concatenation" class="level4">
+<h4 class="anchored" data-anchor-id="concatenation">14. Concatenation</h4>
+<p>Concatenation is the process of combining two or more strings together. The specific syntax for concatenation depends on the SQL dialect (e.g., <code>||</code> for PostgreSQL, <code>+</code> for SQL Server).</p>
+<section id="example-postgresql" class="level5">
+<h5 class="anchored" data-anchor-id="example-postgresql">Example (PostgreSQL):</h5>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> EmployeeName <span class="op">||</span> <span class="st">' - '</span> <span class="op">||</span> DepartmentName <span class="kw">AS</span> EmployeeInfo</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Employees;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This query combines the <code>EmployeeName</code> and <code>DepartmentName</code> with a hyphen between them.</p>
+<hr>
+</section>
+</section>
+<section id="conclusion" class="level4">
+<h4 class="anchored" data-anchor-id="conclusion">Conclusion</h4>
+<p>Mastering these SQL actions can significantly enhance the performance, clarity, and flexibility of your database queries. Whether you’re working with simple queries or complex data transformation, these commands will empower you to write more efficient and maintainable SQL code. By leveraging features like CTEs, ranking functions, null handling, and joins, you can gain deeper insights from your data and make more informed decisions.</p>
 
 
 </section>

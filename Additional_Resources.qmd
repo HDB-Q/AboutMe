@@ -10,3 +10,40 @@ lightbox: auto
 You can download the ISLR-Python PDF by clicking the link below:
 
 [Download the PDF here](img\Python_ISLR.pdf)
+
+
+## Useful Snippets
+
+```python
+def QuickView(df):
+    '''
+    # Quick Data View Function to show columns, nulls,type and missing percentage in a dataframe",
+    '''
+    # Number of Null values for each column
+    Nnull = pd.DataFrame(data=df.isnull().sum(), columns=['Nnull'])
+
+    # Number of Unique Values for each column\
+    Nunique = pd.DataFrame(data=df.nunique(), columns=['Nunique'])
+    Nunique['Total Rows'] = df.shape[0]
+    
+    # Dtype for each column
+    Dtype = pd.DataFrame(data=df.dtypes, columns=['Dtype'])
+  
+    # MissingRate for each column
+    MissingRate = pd.DataFrame(data = df.isnull().sum()/df.shape[0], columns=['MissingRate'])
+    
+    #Sample
+    SampleValue = pd.DataFrame(data= df.sample().sum(), columns = ['Sample'])
+    
+    # Descriptive stats for numerical columns
+    Des = pd.DataFrame(data = df.describe().T)
+
+    # Add more here, if you want to have quickview before you access to the further analysis\n",
+    #Concat all columns you want
+    
+    DataQuickview = pd.concat([Nnull,Nunique,MissingRate, Dtype, SampleValue], axis = 1)
+     # Object volumns don't have a description
+    DataQuickview = DataQuickview.replace(np.NaN,'na')
+    return pd.DataFrame(DataQuickview)
+
+```

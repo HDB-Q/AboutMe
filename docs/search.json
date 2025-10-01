@@ -453,5 +453,131 @@
     "title": "Resources",
     "section": "",
     "text": "You can download the ISLR-Python PDF by clicking the link below:\nDownload the PDF here"
+  },
+  {
+    "objectID": "SQL_Overview.html",
+    "href": "SQL_Overview.html",
+    "title": "SQL Overview",
+    "section": "",
+    "text": "SQL (Structured Query Language) is the backbone of working with relational databases, allowing us to manage and manipulate data efficiently. As data becomes more complex, mastering SQL’s advanced features is key to improving the quality and efficiency of your queries. In this blog, we’ll dive into some of the most commonly used SQL commands that help streamline your data manipulation tasks.\n\n1. Common Table Expressions (CTEs)\nA Common Table Expression (CTE) is a temporary result set that you can reference within a SELECT, INSERT, UPDATE, or DELETE statement. CTEs are useful for breaking down complex queries into simpler, more readable parts. They also improve query performance in some cases by allowing reusability of subqueries.\n\nExample:\nWITH DepartmentCTE AS (\n    SELECT DepartmentID, DepartmentName\n    FROM Departments\n    WHERE DepartmentID IN (1, 2, 3)\n)\nSELECT * \nFROM Employees\nWHERE DepartmentID IN (SELECT DepartmentID FROM DepartmentCTE);\nIn this example, the CTE simplifies the query by isolating the logic that retrieves department information. We can then use the result of the CTE in the main query.\n\n\n\n2. Views\nA View is a virtual table created by a SELECT query. It’s a stored query that you can treat like a regular table. Views are great for simplifying complex queries or reusing logic across different parts of your application. Unlike CTEs, views are persistent and stored in the database schema.\n\nExample:\nCREATE VIEW ActiveEmployees AS\nSELECT EmployeeID, FirstName, LastName\nFROM Employees\nWHERE Status = 'Active';\nYou can now query ActiveEmployees as if it were a regular table:\nSELECT * FROM ActiveEmployees;\n\n\n\n3. CTE in SELECT Statements\nYou can use CTEs directly within SELECT statements to organize data or transform it before final output. This is particularly useful when you need to break down large data sets into smaller, manageable pieces.\n\nExample:\nWITH SalesCTE AS (\n    SELECT EmployeeID, SUM(SalesAmount) AS TotalSales\n    FROM Sales\n    GROUP BY EmployeeID\n)\nSELECT e.EmployeeName, s.TotalSales\nFROM Employees e\nJOIN SalesCTE s ON e.EmployeeID = s.EmployeeID;\nHere, the CTE calculates the total sales per employee, which is then joined with the employee details for the final output.\n\n\n\n4. Rank(), OVER(), and PARTITION\nThe RANK() function is used to assign a rank to each row within a partition of a result set. The OVER() clause defines how the rows are grouped and ordered. When combined with PARTITION BY, it divides the dataset into partitions to rank data separately for each group.\n\nExample:\nSELECT EmployeeID, SalesAmount,\n       RANK() OVER (PARTITION BY DepartmentID ORDER BY SalesAmount DESC) AS Rank\nFROM Sales;\nIn this example, employees are ranked within their department based on sales, with the highest sales getting a rank of 1.\n\n\n\n5. NTILE\nThe NTILE() function divides the result set into a specified number of buckets (tiles). Each row is assigned a bucket number based on the ordering criteria.\n\nExample:\nSELECT EmployeeID, SalesAmount,\n       NTILE(4) OVER (ORDER BY SalesAmount DESC) AS Quartile\nFROM Sales;\nThis query divides employees into 4 quartiles based on their sales performance.\n\n\n\n6. LAG\nThe LAG() function allows you to access data from a previous row in the result set. It’s useful for comparing values from different rows in a result set without using self-joins.\n\nExample:\nSELECT EmployeeID, SalesAmount,\n       LAG(SalesAmount, 1) OVER (ORDER BY SalesAmount) AS PreviousSales\nFROM Sales;\nThis query shows the current and previous sales amount for each employee.\n\n\n\n7. IFNULL\nThe IFNULL() function is used to replace NULL values with a specified value. It’s typically used when you want to ensure that your results are not affected by missing or incomplete data.\n\nExample:\nSELECT EmployeeID, IFNULL(SalesAmount, 0) AS SalesAmount\nFROM Sales;\nThis query replaces any NULL sales amounts with 0.\n\n\n\n8. COALESCE\nThe COALESCE() function returns the first non-NULL value in a list of expressions. It’s a more flexible alternative to IFNULL() because it can handle multiple potential values.\n\nExample:\nSELECT EmployeeID, COALESCE(PhoneNumber, Email, 'No contact information') AS ContactInfo\nFROM Employees;\nIn this example, if the PhoneNumber is NULL, the query will check the Email, and if both are NULL, it will display 'No contact information'.\n\n\n\n9. Joins\nJoins are used to combine rows from two or more tables based on a related column. The most common types of joins are INNER JOIN, LEFT JOIN, RIGHT JOIN, and FULL OUTER JOIN.\n\nExample:\nSELECT e.EmployeeID, e.EmployeeName, d.DepartmentName\nFROM Employees e\nJOIN Departments d ON e.DepartmentID = d.DepartmentID;\nThis query performs an INNER JOIN between the Employees and Departments tables to return employee names along with their respective department names.\n\n\n\n10. SUBSTR\nThe SUBSTR() function is used to extract a substring from a string based on a starting position and length.\n\nExample:\nSELECT EmployeeName, SUBSTR(EmployeeName, 1, 3) AS FirstThreeChars\nFROM Employees;\nThis query returns the first three characters of each employee’s name.\n\n\n\n11. INSTR\nThe INSTR() function returns the position of the first occurrence of a substring within a string. It can be used to find the location of specific characters or words in a column.\n\nExample:\nSELECT EmployeeName, INSTR(EmployeeName, 'John') AS Position\nFROM Employees;\nIn this query, the INSTR() function returns the position of the substring 'John' in each employee’s name.\n\n\n\n12. Length\nThe LENGTH() function returns the number of characters in a string.\n\nExample:\nSELECT EmployeeName, LENGTH(EmployeeName) AS NameLength\nFROM Employees;\nThis query returns the length of each employee’s name.\n\n\n\n13. CAST\nThe CAST() function is used to convert a value from one data type to another. This is particularly useful when you need to ensure data is in the right format for calculations or comparisons.\n\nExample:\nSELECT CAST(SalesAmount AS DECIMAL(10, 2)) AS SalesAmountFormatted\nFROM Sales;\nThis converts the SalesAmount to a decimal with two decimal places.\n\n\n\n14. Concatenation\nConcatenation is the process of combining two or more strings together. The specific syntax for concatenation depends on the SQL dialect (e.g., || for PostgreSQL, + for SQL Server).\n\nExample (PostgreSQL):\nSELECT EmployeeName || ' - ' || DepartmentName AS EmployeeInfo\nFROM Employees;\nThis query combines the EmployeeName and DepartmentName with a hyphen between them.\n\n\n\n\nConclusion\nMastering these SQL actions can significantly enhance the performance, clarity, and flexibility of your database queries. Whether you’re working with simple queries or complex data transformation, these commands will empower you to write more efficient and maintainable SQL code. By leveraging features like CTEs, ranking functions, null handling, and joins, you can gain deeper insights from your data and make more informed decisions."
+  },
+  {
+    "objectID": "SQL_Overview.html#views",
+    "href": "SQL_Overview.html#views",
+    "title": "SQL Overview",
+    "section": "2. Views",
+    "text": "2. Views\nA View is a virtual table created by a SELECT query. It’s a stored query that you can treat like a regular table. Views are great for simplifying complex queries or reusing logic across different parts of your application. Unlike CTEs, views are persistent and stored in the database schema.\n\nExample:\nCREATE VIEW ActiveEmployees AS\nSELECT EmployeeID, FirstName, LastName\nFROM Employees\nWHERE Status = 'Active';\nYou can now query ActiveEmployees as if it were a regular table:\nSELECT * FROM ActiveEmployees;"
+  },
+  {
+    "objectID": "SQL_Overview.html#cte-in-select-statements",
+    "href": "SQL_Overview.html#cte-in-select-statements",
+    "title": "SQL Overview",
+    "section": "3. CTE in SELECT Statements",
+    "text": "3. CTE in SELECT Statements\nYou can use CTEs directly within SELECT statements to organize data or transform it before final output. This is particularly useful when you need to break down large data sets into smaller, manageable pieces.\n\nExample:\nWITH SalesCTE AS (\n    SELECT EmployeeID, SUM(SalesAmount) AS TotalSales\n    FROM Sales\n    GROUP BY EmployeeID\n)\nSELECT e.EmployeeName, s.TotalSales\nFROM Employees e\nJOIN SalesCTE s ON e.EmployeeID = s.EmployeeID;\nHere, the CTE calculates the total sales per employee, which is then joined with the employee details for the final output."
+  },
+  {
+    "objectID": "SQL_Overview.html#rank-over-and-partition",
+    "href": "SQL_Overview.html#rank-over-and-partition",
+    "title": "SQL Overview",
+    "section": "4. Rank(), OVER(), and PARTITION",
+    "text": "4. Rank(), OVER(), and PARTITION\nThe RANK() function is used to assign a rank to each row within a partition of a result set. The OVER() clause defines how the rows are grouped and ordered. When combined with PARTITION BY, it divides the dataset into partitions to rank data separately for each group.\n\nExample:\nSELECT EmployeeID, SalesAmount,\n       RANK() OVER (PARTITION BY DepartmentID ORDER BY SalesAmount DESC) AS Rank\nFROM Sales;\nIn this example, employees are ranked within their department based on sales, with the highest sales getting a rank of 1."
+  },
+  {
+    "objectID": "SQL_Overview.html#ntile",
+    "href": "SQL_Overview.html#ntile",
+    "title": "SQL Overview",
+    "section": "5. NTILE",
+    "text": "5. NTILE\nThe NTILE() function divides the result set into a specified number of buckets (tiles). Each row is assigned a bucket number based on the ordering criteria.\n\nExample:\nSELECT EmployeeID, SalesAmount,\n       NTILE(4) OVER (ORDER BY SalesAmount DESC) AS Quartile\nFROM Sales;\nThis query divides employees into 4 quartiles based on their sales performance."
+  },
+  {
+    "objectID": "SQL_Overview.html#lag",
+    "href": "SQL_Overview.html#lag",
+    "title": "SQL Overview",
+    "section": "6. LAG",
+    "text": "6. LAG\nThe LAG() function allows you to access data from a previous row in the result set. It’s useful for comparing values from different rows in a result set without using self-joins.\n\nExample:\nSELECT EmployeeID, SalesAmount,\n       LAG(SalesAmount, 1) OVER (ORDER BY SalesAmount) AS PreviousSales\nFROM Sales;\nThis query shows the current and previous sales amount for each employee."
+  },
+  {
+    "objectID": "SQL_Overview.html#ifnull",
+    "href": "SQL_Overview.html#ifnull",
+    "title": "SQL Overview",
+    "section": "7. IFNULL",
+    "text": "7. IFNULL\nThe IFNULL() function is used to replace NULL values with a specified value. It’s typically used when you want to ensure that your results are not affected by missing or incomplete data.\n\nExample:\nSELECT EmployeeID, IFNULL(SalesAmount, 0) AS SalesAmount\nFROM Sales;\nThis query replaces any NULL sales amounts with 0."
+  },
+  {
+    "objectID": "SQL_Overview.html#coalesce",
+    "href": "SQL_Overview.html#coalesce",
+    "title": "SQL Overview",
+    "section": "8. COALESCE",
+    "text": "8. COALESCE\nThe COALESCE() function returns the first non-NULL value in a list of expressions. It’s a more flexible alternative to IFNULL() because it can handle multiple potential values.\n\nExample:\nSELECT EmployeeID, COALESCE(PhoneNumber, Email, 'No contact information') AS ContactInfo\nFROM Employees;\nIn this example, if the PhoneNumber is NULL, the query will check the Email, and if both are NULL, it will display 'No contact information'."
+  },
+  {
+    "objectID": "SQL_Overview.html#joins",
+    "href": "SQL_Overview.html#joins",
+    "title": "SQL Overview",
+    "section": "9. Joins",
+    "text": "9. Joins\nJoins are used to combine rows from two or more tables based on a related column. The most common types of joins are INNER JOIN, LEFT JOIN, RIGHT JOIN, and FULL OUTER JOIN.\n\nExample:\nSELECT e.EmployeeID, e.EmployeeName, d.DepartmentName\nFROM Employees e\nJOIN Departments d ON e.DepartmentID = d.DepartmentID;\nThis query performs an INNER JOIN between the Employees and Departments tables to return employee names along with their respective department names."
+  },
+  {
+    "objectID": "SQL_Overview.html#substr",
+    "href": "SQL_Overview.html#substr",
+    "title": "SQL Overview",
+    "section": "10. SUBSTR",
+    "text": "10. SUBSTR\nThe SUBSTR() function is used to extract a substring from a string based on a starting position and length.\n\nExample:\nSELECT EmployeeName, SUBSTR(EmployeeName, 1, 3) AS FirstThreeChars\nFROM Employees;\nThis query returns the first three characters of each employee’s name."
+  },
+  {
+    "objectID": "SQL_Overview.html#instr",
+    "href": "SQL_Overview.html#instr",
+    "title": "SQL Overview",
+    "section": "11. INSTR",
+    "text": "11. INSTR\nThe INSTR() function returns the position of the first occurrence of a substring within a string. It can be used to find the location of specific characters or words in a column.\n\nExample:\nSELECT EmployeeName, INSTR(EmployeeName, 'John') AS Position\nFROM Employees;\nIn this query, the INSTR() function returns the position of the substring 'John' in each employee’s name."
+  },
+  {
+    "objectID": "SQL_Overview.html#length",
+    "href": "SQL_Overview.html#length",
+    "title": "SQL Overview",
+    "section": "12. Length",
+    "text": "12. Length\nThe LENGTH() function returns the number of characters in a string.\n\nExample:\nSELECT EmployeeName, LENGTH(EmployeeName) AS NameLength\nFROM Employees;\nThis query returns the length of each employee’s name."
+  },
+  {
+    "objectID": "SQL_Overview.html#cast",
+    "href": "SQL_Overview.html#cast",
+    "title": "SQL Overview",
+    "section": "13. CAST",
+    "text": "13. CAST\nThe CAST() function is used to convert a value from one data type to another. This is particularly useful when you need to ensure data is in the right format for calculations or comparisons.\n\nExample:\nSELECT CAST(SalesAmount AS DECIMAL(10, 2)) AS SalesAmountFormatted\nFROM Sales;\nThis converts the SalesAmount to a decimal with two decimal places."
+  },
+  {
+    "objectID": "SQL_Overview.html#concatenation",
+    "href": "SQL_Overview.html#concatenation",
+    "title": "SQL Overview",
+    "section": "14. Concatenation",
+    "text": "14. Concatenation\nConcatenation is the process of combining two or more strings together. The specific syntax for concatenation depends on the SQL dialect (e.g., || for PostgreSQL, + for SQL Server).\n\nExample (PostgreSQL):\nSELECT EmployeeName || ' - ' || DepartmentName AS EmployeeInfo\nFROM Employees;\nThis query combines the EmployeeName and DepartmentName with a hyphen between them."
+  },
+  {
+    "objectID": "SQL_Overview.html#conclusion",
+    "href": "SQL_Overview.html#conclusion",
+    "title": "SQL Overview",
+    "section": "Conclusion",
+    "text": "Conclusion\nMastering these SQL actions can significantly enhance the performance, clarity, and flexibility of your database queries. Whether you’re working with simple queries or complex data transformation, these commands will empower you to write more efficient and maintainable SQL code. By leveraging features like CTEs, ranking functions, null handling, and joins, you can gain deeper insights from your data and make more informed decisions.\n\n### Key Considerations for Quarto:\n\n1. **YAML Front Matter**: The YAML header defines the document properties. Here, it’s set up for an HTML output. You can change the format to PDF or Word if needed.\n2. **Interactive Code Execution**: You can use Quarto’s interactive features if your SQL engine is configured correctly or if you’re using Quarto's integrations.\n3. **Code Blocks**: The SQL code examples are enclosed within triple backticks, denoted by ` ```sql ` to specify that the code block contains SQL.\n\nWhen rendered, this document will not only present the text in a structured manner but also allow for interactive code blocks (depending on the environment in which Quarto is being executed). Let me know if you need more details on how to set this up or tweak the formatting!"
+  },
+  {
+    "objectID": "SQL_Overview.html#common-table-expressions-ctes",
+    "href": "SQL_Overview.html#common-table-expressions-ctes",
+    "title": "SQL Overview",
+    "section": "1. Common Table Expressions (CTEs)",
+    "text": "1. Common Table Expressions (CTEs)\nA Common Table Expression (CTE) is a temporary result set that you can reference within a SELECT, INSERT, UPDATE, or DELETE statement. CTEs are useful for breaking down complex queries into simpler, more readable parts. They also improve query performance in some cases by allowing reusability of subqueries.\n\nExample:\nWITH DepartmentCTE AS (\n    SELECT DepartmentID, DepartmentName\n    FROM Departments\n    WHERE DepartmentID IN (1, 2, 3)\n)\nSELECT * \nFROM Employees\nWHERE DepartmentID IN (SELECT DepartmentID FROM DepartmentCTE);\nIn this example, the CTE simplifies the query by isolating the logic that retrieves department information. We can then use the result of the CTE in the main query."
+  },
+  {
+    "objectID": "projects.html#sql-refresh",
+    "href": "projects.html#sql-refresh",
+    "title": "Projects & Blog",
+    "section": "[SQL Refresh]",
+    "text": "[SQL Refresh]\nA refresher page on SQL commands including CTEs, Partition, others.\nMisc"
+  },
+  {
+    "objectID": "Additional_Resources.html#useful-snippets",
+    "href": "Additional_Resources.html#useful-snippets",
+    "title": "Resources",
+    "section": "Useful Snippets",
+    "text": "Useful Snippets\ndef QuickView(df):\n    '''\n    # Quick Data View Function to show columns, nulls,type and missing percentage in a dataframe\",\n    '''\n    # Number of Null values for each column\n    Nnull = pd.DataFrame(data=df.isnull().sum(), columns=['Nnull'])\n\n    # Number of Unique Values for each column\\\n    Nunique = pd.DataFrame(data=df.nunique(), columns=['Nunique'])\n    Nunique['Total Rows'] = df.shape[0]\n    \n    # Dtype for each column\n    Dtype = pd.DataFrame(data=df.dtypes, columns=['Dtype'])\n  \n    # MissingRate for each column\n    MissingRate = pd.DataFrame(data = df.isnull().sum()/df.shape[0], columns=['MissingRate'])\n    \n    #Sample\n    SampleValue = pd.DataFrame(data= df.sample().sum(), columns = ['Sample'])\n    \n    # Descriptive stats for numerical columns\n    Des = pd.DataFrame(data = df.describe().T)\n\n    # Add more here, if you want to have quickview before you access to the further analysis\\n\",\n    #Concat all columns you want\n    \n    DataQuickview = pd.concat([Nnull,Nunique,MissingRate, Dtype, SampleValue], axis = 1)\n     # Object volumns don't have a description\n    DataQuickview = DataQuickview.replace(np.NaN,'na')\n    return pd.DataFrame(DataQuickview)"
   }
 ]

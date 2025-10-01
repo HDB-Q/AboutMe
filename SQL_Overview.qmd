@@ -1,0 +1,222 @@
+---
+title: SQL Overview
+# author: "Your Name"
+filters:
+  - lightbox
+lightbox: auto
+editor: visual
+---
+
+SQL (Structured Query Language) is the backbone of working with relational databases, allowing us to manage and manipulate data efficiently. As data becomes more complex, mastering SQL’s advanced features is key to improving the quality and efficiency of your queries. In this blog, we'll dive into some of the most commonly used SQL commands that help streamline your data manipulation tasks.
+
+
+#### 1. Common Table Expressions (CTEs)
+
+A Common Table Expression (CTE) is a temporary result set that you can reference within a `SELECT`, `INSERT`, `UPDATE`, or `DELETE` statement. CTEs are useful for breaking down complex queries into simpler, more readable parts. They also improve query performance in some cases by allowing reusability of subqueries.
+
+##### Example:
+
+```sql
+WITH DepartmentCTE AS (
+    SELECT DepartmentID, DepartmentName
+    FROM Departments
+    WHERE DepartmentID IN (1, 2, 3)
+)
+SELECT * 
+FROM Employees
+WHERE DepartmentID IN (SELECT DepartmentID FROM DepartmentCTE);
+````
+
+In this example, the CTE simplifies the query by isolating the logic that retrieves department information. We can then use the result of the CTE in the main query.
+
+#### 2. Views
+
+A View is a virtual table created by a `SELECT` query. It’s a stored query that you can treat like a regular table. Views are great for simplifying complex queries or reusing logic across different parts of your application. Unlike CTEs, views are persistent and stored in the database schema.
+
+##### Example:
+
+```sql
+CREATE VIEW ActiveEmployees AS
+SELECT EmployeeID, FirstName, LastName
+FROM Employees
+WHERE Status = 'Active';
+```
+
+You can now query `ActiveEmployees` as if it were a regular table:
+
+```sql
+SELECT * FROM ActiveEmployees;
+```
+
+#### 3. CTE in SELECT Statements
+
+You can use CTEs directly within `SELECT` statements to organize data or transform it before final output. This is particularly useful when you need to break down large data sets into smaller, manageable pieces.
+
+##### Example:
+
+```sql
+WITH SalesCTE AS (
+    SELECT EmployeeID, SUM(SalesAmount) AS TotalSales
+    FROM Sales
+    GROUP BY EmployeeID
+)
+SELECT e.EmployeeName, s.TotalSales
+FROM Employees e
+JOIN SalesCTE s ON e.EmployeeID = s.EmployeeID;
+```
+
+Here, the CTE calculates the total sales per employee, which is then joined with the employee details for the final output.
+
+#### 4. Rank(), OVER(), and PARTITION
+
+The `RANK()` function is used to assign a rank to each row within a partition of a result set. The `OVER()` clause defines how the rows are grouped and ordered. When combined with `PARTITION BY`, it divides the dataset into partitions to rank data separately for each group.
+
+##### Example:
+
+```sql
+SELECT EmployeeID, SalesAmount,
+       RANK() OVER (PARTITION BY DepartmentID ORDER BY SalesAmount DESC) AS Rank
+FROM Sales;
+```
+
+In this example, employees are ranked within their department based on sales, with the highest sales getting a rank of 1.
+
+#### 5. NTILE
+
+The `NTILE()` function divides the result set into a specified number of buckets (tiles). Each row is assigned a bucket number based on the ordering criteria.
+
+##### Example:
+
+```sql
+SELECT EmployeeID, SalesAmount,
+       NTILE(4) OVER (ORDER BY SalesAmount DESC) AS Quartile
+FROM Sales;
+```
+
+This query divides employees into 4 quartiles based on their sales performance.
+
+#### 6. LAG
+
+The `LAG()` function allows you to access data from a previous row in the result set. It’s useful for comparing values from different rows in a result set without using self-joins.
+
+##### Example:
+
+```sql
+SELECT EmployeeID, SalesAmount,
+       LAG(SalesAmount, 1) OVER (ORDER BY SalesAmount) AS PreviousSales
+FROM Sales;
+```
+
+This query shows the current and previous sales amount for each employee.
+
+#### 7. IFNULL
+
+The `IFNULL()` function is used to replace `NULL` values with a specified value. It’s typically used when you want to ensure that your results are not affected by missing or incomplete data.
+
+##### Example:
+
+```sql
+SELECT EmployeeID, IFNULL(SalesAmount, 0) AS SalesAmount
+FROM Sales;
+```
+
+This query replaces any `NULL` sales amounts with `0`.
+
+#### 8. COALESCE
+
+The `COALESCE()` function returns the first non-NULL value in a list of expressions. It’s a more flexible alternative to `IFNULL()` because it can handle multiple potential values.
+
+##### Example:
+
+```sql
+SELECT EmployeeID, COALESCE(PhoneNumber, Email, 'No contact information') AS ContactInfo
+FROM Employees;
+```
+
+In this example, if the `PhoneNumber` is `NULL`, the query will check the `Email`, and if both are `NULL`, it will display `'No contact information'`.
+
+#### 9. Joins
+
+Joins are used to combine rows from two or more tables based on a related column. The most common types of joins are `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`, and `FULL OUTER JOIN`.
+
+##### Example:
+
+```sql
+SELECT e.EmployeeID, e.EmployeeName, d.DepartmentName
+FROM Employees e
+JOIN Departments d ON e.DepartmentID = d.DepartmentID;
+```
+
+This query performs an `INNER JOIN` between the `Employees` and `Departments` tables to return employee names along with their respective department names.
+
+#### 10. SUBSTR
+
+The `SUBSTR()` function is used to extract a substring from a string based on a starting position and length.
+
+##### Example:
+
+```sql
+SELECT EmployeeName, SUBSTR(EmployeeName, 1, 3) AS FirstThreeChars
+FROM Employees;
+```
+
+This query returns the first three characters of each employee’s name.
+
+#### 11. INSTR
+
+The `INSTR()` function returns the position of the first occurrence of a substring within a string. It can be used to find the location of specific characters or words in a column.
+
+##### Example:
+
+```sql
+SELECT EmployeeName, INSTR(EmployeeName, 'John') AS Position
+FROM Employees;
+```
+
+In this query, the `INSTR()` function returns the position of the substring `'John'` in each employee's name.
+
+#### 12. Length
+
+The `LENGTH()` function returns the number of characters in a string.
+
+##### Example:
+
+```sql
+SELECT EmployeeName, LENGTH(EmployeeName) AS NameLength
+FROM Employees;
+```
+
+This query returns the length of each employee’s name.
+
+#### 13. CAST
+
+The `CAST()` function is used to convert a value from one data type to another. This is particularly useful when you need to ensure data is in the right format for calculations or comparisons.
+
+##### Example:
+
+```sql
+SELECT CAST(SalesAmount AS DECIMAL(10, 2)) AS SalesAmountFormatted
+FROM Sales;
+```
+
+This converts the `SalesAmount` to a decimal with two decimal places.
+
+#### 14. Concatenation
+
+Concatenation is the process of combining two or more strings together. The specific syntax for concatenation depends on the SQL dialect (e.g., `||` for PostgreSQL, `+` for SQL Server).
+
+##### Example (PostgreSQL):
+
+```sql
+SELECT EmployeeName || ' - ' || DepartmentName AS EmployeeInfo
+FROM Employees;
+```
+
+This query combines the `EmployeeName` and `DepartmentName` with a hyphen between them.
+
+---
+
+#### Conclusion
+
+Mastering these SQL actions can significantly enhance the performance, clarity, and flexibility of your database queries. Whether you're working with simple queries or complex data transformation, these commands will empower you to write more efficient and maintainable SQL code. By leveraging features like CTEs, ranking functions, null handling, and joins, you can gain deeper insights from your data and make more informed decisions.
+
