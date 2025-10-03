@@ -52,7 +52,7 @@ Useful links and guides.
 
 <span class="badge bg-success">Misc</span>
 
-## [SQL Refresh]
+## [SQL Refresh](SQL_Overview.qmd)
 A refresher page on SQL commands including CTEs, Partition, others. 
 
 <span class="badge bg-success">Misc</span>
