@@ -691,5 +691,75 @@
     "title": "Tracking Drift",
     "section": "Interpreting Metrics Together",
     "text": "Interpreting Metrics Together\nNo single metric diagnoses all forms of drift.\nCommon diagnostic patterns include:\n\nHigh PSI with stable AUC\nPopulation shift without performance loss\nStable AUC with worsening log loss or calibration\nProbability drift\nRising CSI in key predictors\nStructural changes in the population\nDeclining AUC and KS\nConcept drift requiring redevelopment"
+  },
+  {
+    "objectID": "Tracking_Drift.html",
+    "href": "Tracking_Drift.html",
+    "title": "Tracking Drift",
+    "section": "",
+    "text": "A predictive model is meaningful only as long as the population to which it is applied resembles the population on which it was developed.\nDuring development, the model learns relationships between input characteristics, predicted probabilities, and observed outcomes under a specific data-generating process.\nOver time, however, this process can change in several ways:\n\nPopulation composition can shift\nThe distribution of customer characteristics, behaviors, or scores may change. Even if the model logic remains valid, it may now be applied to a different mix of observations.\nPopulation parameters can shift\nThe relationship between predicted probabilities and observed outcomes may no longer align. The model may still rank-order risk correctly, but predicted probabilities become miscalibrated.\nThe population and the underlying concept can drift\nThe fundamental relationship between predictors and outcomes can weaken or change direction, reducing the model’s ability to discriminate between outcomes.\n\nEffective model monitoring aims to detect these changes early, distinguish between them, and guide appropriate remediation actions."
+  },
+  {
+    "objectID": "Tracking_Drift.html#introduction-why-model-monitoring-matters",
+    "href": "Tracking_Drift.html#introduction-why-model-monitoring-matters",
+    "title": "Tracking Drift",
+    "section": "",
+    "text": "A predictive model is meaningful only as long as the population to which it is applied resembles the population on which it was developed.\nDuring development, the model learns relationships between input characteristics, predicted probabilities, and observed outcomes under a specific data-generating process.\nOver time, however, this process can change in several ways:\n\nPopulation composition can shift\nThe distribution of customer characteristics, behaviors, or scores may change. Even if the model logic remains valid, it may now be applied to a different mix of observations.\nPopulation parameters can shift\nThe relationship between predicted probabilities and observed outcomes may no longer align. The model may still rank-order risk correctly, but predicted probabilities become miscalibrated.\nThe population and the underlying concept can drift\nThe fundamental relationship between predictors and outcomes can weaken or change direction, reducing the model’s ability to discriminate between outcomes.\n\nEffective model monitoring aims to detect these changes early, distinguish between them, and guide appropriate remediation actions."
+  },
+  {
+    "objectID": "Tracking_Drift.html#discrimination-metrics-is-the-model-still-separating-outcomes",
+    "href": "Tracking_Drift.html#discrimination-metrics-is-the-model-still-separating-outcomes",
+    "title": "Tracking Drift",
+    "section": "Discrimination Metrics: Is the Model Still Separating Outcomes?",
+    "text": "Discrimination Metrics: Is the Model Still Separating Outcomes?\nDiscrimination metrics assess whether the model can still rank-order observations correctly.\n\nAUC (Area Under the ROC Curve)\nAUC measures the probability that a randomly chosen positive observation receives a higher score than a randomly chosen negative observation.\nMonitoring interpretation: - Stable AUC suggests the model still captures relative risk ordering - Declining AUC indicates concept drift - AUC is insensitive to calibration changes\n\n\n\nKS (Kolmogorov–Smirnov Statistic)\nKS measures the maximum separation between cumulative score distributions for positive and negative outcomes.\nMonitoring interpretation: - Declining KS indicates reduced class separation - KS is sensitive to shifts in score distributions - Often reacts earlier than AUC in operational settings\n\n\n\nGini Coefficient\nThe Gini coefficient is a linear transformation of AUC:\n[ = 2 - 1 ]\nMonitoring interpretation: - Mirrors AUC behavior - Commonly used in credit risk and regulatory reporting - Useful for business-facing communication"
+  },
+  {
+    "objectID": "Tracking_Drift.html#calibration-metrics-do-the-probabilities-still-mean-what-they-say",
+    "href": "Tracking_Drift.html#calibration-metrics-do-the-probabilities-still-mean-what-they-say",
+    "title": "Tracking Drift",
+    "section": "Calibration Metrics: Do the Probabilities Still Mean What They Say?",
+    "text": "Calibration Metrics: Do the Probabilities Still Mean What They Say?\nCalibration metrics evaluate whether predicted probabilities remain aligned with observed outcome rates.\n\nCalibration Curves (Reliability Diagrams)\nPredictions are grouped into probability buckets and compared to observed outcome frequencies.\nMonitoring interpretation: - Deviations from the diagonal indicate miscalibration - Calibration can drift even when AUC remains stable - Particularly important for pricing, provisioning, and decision thresholds\n\n\n\nLog Loss (Cross-Entropy)\nLog loss penalizes confident but incorrect predictions.\nMonitoring interpretation: - Sensitive to probability shifts - Often degrades before AUC does - Useful early indicator of calibration drift\n\n\n\nBrier Score\nThe Brier score measures mean squared error of predicted probabilities.\nMonitoring interpretation: - Captures both calibration and discrimination effects - More interpretable than log loss for some audiences - Increasing Brier score suggests declining probability quality"
+  },
+  {
+    "objectID": "Tracking_Drift.html#population-stability-metrics-is-the-population-changing",
+    "href": "Tracking_Drift.html#population-stability-metrics-is-the-population-changing",
+    "title": "Tracking Drift",
+    "section": "Population Stability Metrics: Is the Population Changing?",
+    "text": "Population Stability Metrics: Is the Population Changing?\nStability metrics detect shifts in input or score distributions, often before labels are available.\n\nPopulation Stability Index (PSI)\nPSI measures the divergence between a reference distribution (typically development or recent baseline) and the current population.\nMonitoring interpretation: - PSI &lt; 0.10: stable population - 0.10–0.25: moderate shift - ≥ 0.25: significant population drift - High PSI alone does not imply performance degradation\n\n\n\nCharacteristic Stability Index (CSI)\nCSI applies the PSI framework to individual input variables.\nMonitoring interpretation: - Identifies which features are drifting - Helps separate harmless demographic shifts from structural changes - Often more actionable than score-level PSI\n\n\n\nDistribution Distance Metrics\nAlternative stability measures include: - Jensen–Shannon divergence - Wasserstein (Earth Mover’s) distance\nMonitoring interpretation: - More robust for continuous or sparse data - Useful for modern ML features and embeddings - Complement PSI rather than replace it"
+  },
+  {
+    "objectID": "Tracking_Drift.html#rank-and-score-stability-metrics-is-model-behavior-consistent",
+    "href": "Tracking_Drift.html#rank-and-score-stability-metrics-is-model-behavior-consistent",
+    "title": "Tracking Drift",
+    "section": "Rank and Score Stability Metrics: Is Model Behavior Consistent?",
+    "text": "Rank and Score Stability Metrics: Is Model Behavior Consistent?\nThese metrics examine how scores behave over time, even when labels are delayed.\n\nScore Distribution Moments\nTracking changes in: - Mean - Variance - Skewness\nMonitoring interpretation: - Sudden shifts may indicate upstream data issues - Often serve as early-warning signals\n\n\n\nRank Correlation Metrics\nSpearman or Kendall rank correlations compare score rankings across time windows.\nMonitoring interpretation: - Detects instability in ordering - Useful for challenger comparisons and model refresh decisions"
+  },
+  {
+    "objectID": "Tracking_Drift.html#data-quality-metrics-is-the-input-data-still-reliable",
+    "href": "Tracking_Drift.html#data-quality-metrics-is-the-input-data-still-reliable",
+    "title": "Tracking Drift",
+    "section": "Data Quality Metrics: Is the Input Data Still Reliable?",
+    "text": "Data Quality Metrics: Is the Input Data Still Reliable?\nPerformance degradation often originates from data issues rather than modeling flaws.\n\nMissingness and Validity Checks\nCommon checks include: - Missing rate by feature - Out-of-range or invalid values - Unexpected categorical levels\nMonitoring interpretation: - Sudden changes often precede metric degradation - Essential for root-cause analysis\n\n\n\nVolume and Latency Metrics\nMonitoring record counts and data arrival times helps contextualize metric changes.\nMonitoring interpretation: - Volume shifts may reflect business changes - Data delays can bias performance estimates"
+  },
+  {
+    "objectID": "Tracking_Drift.html#business-outcome-metrics-is-the-model-still-delivering-value",
+    "href": "Tracking_Drift.html#business-outcome-metrics-is-the-model-still-delivering-value",
+    "title": "Tracking Drift",
+    "section": "Business Outcome Metrics: Is the Model Still Delivering Value?",
+    "text": "Business Outcome Metrics: Is the Model Still Delivering Value?\nTechnical model metrics should be interpreted alongside business KPIs.\nExamples include: - Approval or acceptance rates - Expected vs realized loss - Profit per decision - Override or manual intervention rates\nMonitoring interpretation: - Stable model metrics with worsening business outcomes suggest strategy mismatch - Increasing overrides may signal declining trust in the model"
+  },
+  {
+    "objectID": "Tracking_Drift.html#interpreting-metrics-together",
+    "href": "Tracking_Drift.html#interpreting-metrics-together",
+    "title": "Tracking Drift",
+    "section": "Interpreting Metrics Together",
+    "text": "Interpreting Metrics Together\nNo single metric diagnoses all forms of drift.\nCommon diagnostic patterns include:\n\nHigh PSI with stable AUC\nPopulation shift without performance loss\nStable AUC with worsening log loss or calibration\nProbability drift\nRising CSI in key predictors\nStructural changes in the population\nDeclining AUC and KS\nConcept drift requiring redevelopment"
+  },
+  {
+    "objectID": "Tracking_Drift.html#conclusion",
+    "href": "Tracking_Drift.html#conclusion",
+    "title": "Tracking Drift",
+    "section": "Conclusion",
+    "text": "Conclusion\nModel monitoring is not about detecting failure at a single point in time, but about understanding how and why the modeling environment evolves.\nBy combining: - Discrimination metrics - Calibration metrics - Stability metrics - Data quality indicators - Business outcomes\npractitioners can distinguish between population drift, calibration drift, and concept drift—and respond proportionately, whether through recalibration, policy adjustment, or full model redevelopment."
   }
 ]
