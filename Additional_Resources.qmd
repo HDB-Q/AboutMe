@@ -11,6 +11,8 @@ You can download the ISLR-Python PDF by clicking the link below:
 
 [Download the PDF here](img\Python_ISLR.pdf)
 
+[CreditRiskScorecardTemplate from Kaggle - Beata Faron](img\credit-risk-eda-woe-scorecard-2.pdf)
+
 
 ## Useful Snippets
 
