@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Erik Erhardt">
-<meta name="description" content="A qmd quarto template document.">
 
-<title>newfiletitle – Hans’ Portfolio</title>
+<title>Tracking Drift – Hans’ Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,22 +68,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
-
-<meta name="citation_title" content="newfiletitle">
-<meta name="citation_abstract" content="Document abstract may be somewhat long.
-">
-<meta name="citation_author" content="Erik Erhardt">
-<meta name="citation_publication_date" content="2026-02-06">
-<meta name="citation_cover_date" content="2026-02-06">
-<meta name="citation_year" content="2026">
-<meta name="citation_online_date" content="2026-02-06">
-<meta name="citation_fulltext_html_url" content="https://StatAcumen.com">
-<meta name="citation_language" content="en">
 </head>
 
 <body class="nav-fixed">
@@ -127,211 +111,219 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction-why-model-monitoring-matters" id="toc-introduction-why-model-monitoring-matters" class="nav-link active" data-scroll-target="#introduction-why-model-monitoring-matters">Introduction: Why Model Monitoring Matters</a></li>
+  <li><a href="#discrimination-metrics-is-the-model-still-separating-outcomes" id="toc-discrimination-metrics-is-the-model-still-separating-outcomes" class="nav-link" data-scroll-target="#discrimination-metrics-is-the-model-still-separating-outcomes">Discrimination Metrics: Is the Model Still Separating Outcomes?</a>
+  <ul class="collapse">
+  <li><a href="#auc-area-under-the-roc-curve" id="toc-auc-area-under-the-roc-curve" class="nav-link" data-scroll-target="#auc-area-under-the-roc-curve">AUC (Area Under the ROC Curve)</a></li>
+  <li><a href="#ks-kolmogorovsmirnov-statistic" id="toc-ks-kolmogorovsmirnov-statistic" class="nav-link" data-scroll-target="#ks-kolmogorovsmirnov-statistic">KS (Kolmogorov–Smirnov Statistic)</a></li>
+  <li><a href="#gini-coefficient" id="toc-gini-coefficient" class="nav-link" data-scroll-target="#gini-coefficient">Gini Coefficient</a></li>
+  </ul></li>
+  <li><a href="#calibration-metrics-do-the-probabilities-still-mean-what-they-say" id="toc-calibration-metrics-do-the-probabilities-still-mean-what-they-say" class="nav-link" data-scroll-target="#calibration-metrics-do-the-probabilities-still-mean-what-they-say">Calibration Metrics: Do the Probabilities Still Mean What They Say?</a>
+  <ul class="collapse">
+  <li><a href="#calibration-curves-reliability-diagrams" id="toc-calibration-curves-reliability-diagrams" class="nav-link" data-scroll-target="#calibration-curves-reliability-diagrams">Calibration Curves (Reliability Diagrams)</a></li>
+  <li><a href="#log-loss-cross-entropy" id="toc-log-loss-cross-entropy" class="nav-link" data-scroll-target="#log-loss-cross-entropy">Log Loss (Cross-Entropy)</a></li>
+  <li><a href="#brier-score" id="toc-brier-score" class="nav-link" data-scroll-target="#brier-score">Brier Score</a></li>
+  </ul></li>
+  <li><a href="#population-stability-metrics-is-the-population-changing" id="toc-population-stability-metrics-is-the-population-changing" class="nav-link" data-scroll-target="#population-stability-metrics-is-the-population-changing">Population Stability Metrics: Is the Population Changing?</a>
+  <ul class="collapse">
+  <li><a href="#population-stability-index-psi" id="toc-population-stability-index-psi" class="nav-link" data-scroll-target="#population-stability-index-psi">Population Stability Index (PSI)</a></li>
+  <li><a href="#characteristic-stability-index-csi" id="toc-characteristic-stability-index-csi" class="nav-link" data-scroll-target="#characteristic-stability-index-csi">Characteristic Stability Index (CSI)</a></li>
+  <li><a href="#distribution-distance-metrics" id="toc-distribution-distance-metrics" class="nav-link" data-scroll-target="#distribution-distance-metrics">Distribution Distance Metrics</a></li>
+  </ul></li>
+  <li><a href="#rank-and-score-stability-metrics-is-model-behavior-consistent" id="toc-rank-and-score-stability-metrics-is-model-behavior-consistent" class="nav-link" data-scroll-target="#rank-and-score-stability-metrics-is-model-behavior-consistent">Rank and Score Stability Metrics: Is Model Behavior Consistent?</a>
+  <ul class="collapse">
+  <li><a href="#score-distribution-moments" id="toc-score-distribution-moments" class="nav-link" data-scroll-target="#score-distribution-moments">Score Distribution Moments</a></li>
+  <li><a href="#rank-correlation-metrics" id="toc-rank-correlation-metrics" class="nav-link" data-scroll-target="#rank-correlation-metrics">Rank Correlation Metrics</a></li>
+  </ul></li>
+  <li><a href="#data-quality-metrics-is-the-input-data-still-reliable" id="toc-data-quality-metrics-is-the-input-data-still-reliable" class="nav-link" data-scroll-target="#data-quality-metrics-is-the-input-data-still-reliable">Data Quality Metrics: Is the Input Data Still Reliable?</a>
+  <ul class="collapse">
+  <li><a href="#missingness-and-validity-checks" id="toc-missingness-and-validity-checks" class="nav-link" data-scroll-target="#missingness-and-validity-checks">Missingness and Validity Checks</a></li>
+  <li><a href="#volume-and-latency-metrics" id="toc-volume-and-latency-metrics" class="nav-link" data-scroll-target="#volume-and-latency-metrics">Volume and Latency Metrics</a></li>
+  </ul></li>
+  <li><a href="#business-outcome-metrics-is-the-model-still-delivering-value" id="toc-business-outcome-metrics-is-the-model-still-delivering-value" class="nav-link" data-scroll-target="#business-outcome-metrics-is-the-model-still-delivering-value">Business Outcome Metrics: Is the Model Still Delivering Value?</a></li>
+  <li><a href="#interpreting-metrics-together" id="toc-interpreting-metrics-together" class="nav-link" data-scroll-target="#interpreting-metrics-together">Interpreting Metrics Together</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">newfiletitle</h1>
-<p class="subtitle lead">Subtitle</p>
+<h1 class="title">Tracking Drift</h1>
 </div>
 
-<div>
-  <div class="description">
-    <p>A qmd quarto template document.</p>
-  </div>
-</div>
 
-<div class="quarto-title-meta-author column-page">
-  <div class="quarto-title-meta-heading">Author</div>
-  <div class="quarto-title-meta-heading">Affiliation</div>
-  
-    <div class="quarto-title-meta-contents">
-    <p class="author"><a href="https://StatAcumen.com/about">Erik Erhardt</a> <a href="mailto:erike@stat.unm.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-9817-4011" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            <a href="https://www.math.unm.edu/people/academic-personnel/erik-erhardt">
-            University of New Mexico
-            </a>
-          </p>
-      </div>
-  </div>
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta">
 
-      
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">02/06/2026 &nbsp;09:09:51 AM -0500</p>
-    </div>
-  </div>
+    
   
     
   </div>
   
-<div>
-  <div class="abstract">
-    <div class="block-title">Abstract</div>
-    <p>Document abstract may be somewhat long.</p>
-  </div>
-</div>
 
 
 </header>
 
-<nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">Contents</h2>
-   
-  <ul>
-  <li><a href="#sec-Executive_summary" id="toc-sec-Executive_summary"><span class="header-section-number">1</span> Executive summary</a></li>
-  <li><a href="#sec-Introduction" id="toc-sec-Introduction"><span class="header-section-number">2</span> Introduction</a>
-  <ul>
-  <li><a href="#backgroundrationale" id="toc-backgroundrationale"><span class="header-section-number">2.1</span> Background/rationale</a></li>
-  <li><a href="#objectives" id="toc-objectives"><span class="header-section-number">2.2</span> Objectives</a></li>
-  <li><a href="#literature-review" id="toc-literature-review"><span class="header-section-number">2.3</span> Literature Review:</a></li>
-  </ul></li>
-  <li><a href="#sec-Methods" id="toc-sec-Methods"><span class="header-section-number">3</span> Methods</a>
-  <ul>
-  <li><a href="#study-design" id="toc-study-design"><span class="header-section-number">3.1</span> Study design</a></li>
-  <li><a href="#setting" id="toc-setting"><span class="header-section-number">3.2</span> Setting</a></li>
-  <li><a href="#participants" id="toc-participants"><span class="header-section-number">3.3</span> Participants</a></li>
-  <li><a href="#variables" id="toc-variables"><span class="header-section-number">3.4</span> Variables</a></li>
-  <li><a href="#data-sourcesmeasurement" id="toc-data-sourcesmeasurement"><span class="header-section-number">3.5</span> Data sources/measurement</a></li>
-  <li><a href="#bias" id="toc-bias"><span class="header-section-number">3.6</span> Bias</a></li>
-  <li><a href="#study-size" id="toc-study-size"><span class="header-section-number">3.7</span> Study size</a></li>
-  <li><a href="#quantitative-variables" id="toc-quantitative-variables"><span class="header-section-number">3.8</span> Quantitative variables</a></li>
-  <li><a href="#statistical-methods" id="toc-statistical-methods"><span class="header-section-number">3.9</span> Statistical methods</a></li>
-  </ul></li>
-  <li><a href="#sec-Results" id="toc-sec-Results"><span class="header-section-number">4</span> Results</a></li>
-  </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="newfile.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
-<!---
-# Erik's compile commands in R:
-  setwd("D:/Dropbox/StatAcumen/consult/Rpackages/erikmisc/data-raw/qmd_template")
-  fn_qmd <- "erik_qmd_template.qmd"
-  quarto::quarto_render(input = fn_qmd)
--->
-<div style="page-break-after: always;"></div>
-<section id="sec-Executive_summary" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Executive summary</h1>
-<div style="page-break-after: always;"></div>
-</section>
-<section id="sec-Introduction" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Introduction</h1>
-<section id="backgroundrationale" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="backgroundrationale"><span class="header-section-number">2.1</span> Background/rationale</h2>
+
+<section id="introduction-why-model-monitoring-matters" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-why-model-monitoring-matters">Introduction: Why Model Monitoring Matters</h2>
+<p>A predictive model is meaningful only as long as the <strong>population to which it is applied resembles the population on which it was developed</strong>.<br>
+During development, the model learns relationships between input characteristics, predicted probabilities, and observed outcomes under a specific data-generating process.</p>
+<p>Over time, however, this process can change in several ways:</p>
 <ul>
-<li>Explain the scientific background and rationale for the investigation being reported</li>
+<li><p><strong>Population composition can shift</strong><br>
+The distribution of customer characteristics, behaviors, or scores may change. Even if the model logic remains valid, it may now be applied to a different mix of observations.</p></li>
+<li><p><strong>Population parameters can shift</strong><br>
+The relationship between predicted probabilities and observed outcomes may no longer align. The model may still rank-order risk correctly, but predicted probabilities become miscalibrated.</p></li>
+<li><p><strong>The population and the underlying concept can drift</strong><br>
+The fundamental relationship between predictors and outcomes can weaken or change direction, reducing the model’s ability to discriminate between outcomes.</p></li>
 </ul>
+<p>Effective model monitoring aims to <strong>detect these changes early</strong>, distinguish between them, and guide appropriate remediation actions.</p>
+<hr>
 </section>
-<section id="objectives" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="objectives"><span class="header-section-number">2.2</span> Objectives</h2>
+<section id="discrimination-metrics-is-the-model-still-separating-outcomes" class="level2">
+<h2 class="anchored" data-anchor-id="discrimination-metrics-is-the-model-still-separating-outcomes">Discrimination Metrics: Is the Model Still Separating Outcomes?</h2>
+<p>Discrimination metrics assess whether the model can still <strong>rank-order observations correctly</strong>.</p>
+<section id="auc-area-under-the-roc-curve" class="level3">
+<h3 class="anchored" data-anchor-id="auc-area-under-the-roc-curve">AUC (Area Under the ROC Curve)</h3>
+<p>AUC measures the probability that a randomly chosen positive observation receives a higher score than a randomly chosen negative observation.</p>
+<p><strong>Monitoring interpretation:</strong> - Stable AUC suggests the model still captures relative risk ordering - Declining AUC indicates <strong>concept drift</strong> - AUC is insensitive to calibration changes</p>
+<hr>
+</section>
+<section id="ks-kolmogorovsmirnov-statistic" class="level3">
+<h3 class="anchored" data-anchor-id="ks-kolmogorovsmirnov-statistic">KS (Kolmogorov–Smirnov Statistic)</h3>
+<p>KS measures the maximum separation between cumulative score distributions for positive and negative outcomes.</p>
+<p><strong>Monitoring interpretation:</strong> - Declining KS indicates reduced class separation - KS is sensitive to shifts in score distributions - Often reacts earlier than AUC in operational settings</p>
+<hr>
+</section>
+<section id="gini-coefficient" class="level3">
+<h3 class="anchored" data-anchor-id="gini-coefficient">Gini Coefficient</h3>
+<p>The Gini coefficient is a linear transformation of AUC:</p>
+<p>[ = 2 - 1 ]</p>
+<p><strong>Monitoring interpretation:</strong> - Mirrors AUC behavior - Commonly used in credit risk and regulatory reporting - Useful for business-facing communication</p>
+<hr>
+</section>
+</section>
+<section id="calibration-metrics-do-the-probabilities-still-mean-what-they-say" class="level2">
+<h2 class="anchored" data-anchor-id="calibration-metrics-do-the-probabilities-still-mean-what-they-say">Calibration Metrics: Do the Probabilities Still Mean What They Say?</h2>
+<p>Calibration metrics evaluate whether <strong>predicted probabilities remain aligned with observed outcome rates</strong>.</p>
+<section id="calibration-curves-reliability-diagrams" class="level3">
+<h3 class="anchored" data-anchor-id="calibration-curves-reliability-diagrams">Calibration Curves (Reliability Diagrams)</h3>
+<p>Predictions are grouped into probability buckets and compared to observed outcome frequencies.</p>
+<p><strong>Monitoring interpretation:</strong> - Deviations from the diagonal indicate miscalibration - Calibration can drift even when AUC remains stable - Particularly important for pricing, provisioning, and decision thresholds</p>
+<hr>
+</section>
+<section id="log-loss-cross-entropy" class="level3">
+<h3 class="anchored" data-anchor-id="log-loss-cross-entropy">Log Loss (Cross-Entropy)</h3>
+<p>Log loss penalizes confident but incorrect predictions.</p>
+<p><strong>Monitoring interpretation:</strong> - Sensitive to probability shifts - Often degrades before AUC does - Useful early indicator of calibration drift</p>
+<hr>
+</section>
+<section id="brier-score" class="level3">
+<h3 class="anchored" data-anchor-id="brier-score">Brier Score</h3>
+<p>The Brier score measures mean squared error of predicted probabilities.</p>
+<p><strong>Monitoring interpretation:</strong> - Captures both calibration and discrimination effects - More interpretable than log loss for some audiences - Increasing Brier score suggests declining probability quality</p>
+<hr>
+</section>
+</section>
+<section id="population-stability-metrics-is-the-population-changing" class="level2">
+<h2 class="anchored" data-anchor-id="population-stability-metrics-is-the-population-changing">Population Stability Metrics: Is the Population Changing?</h2>
+<p>Stability metrics detect <strong>shifts in input or score distributions</strong>, often before labels are available.</p>
+<section id="population-stability-index-psi" class="level3">
+<h3 class="anchored" data-anchor-id="population-stability-index-psi">Population Stability Index (PSI)</h3>
+<p>PSI measures the divergence between a reference distribution (typically development or recent baseline) and the current population.</p>
+<p><strong>Monitoring interpretation:</strong> - PSI &lt; 0.10: stable population - 0.10–0.25: moderate shift - ≥ 0.25: significant population drift - High PSI alone does not imply performance degradation</p>
+<hr>
+</section>
+<section id="characteristic-stability-index-csi" class="level3">
+<h3 class="anchored" data-anchor-id="characteristic-stability-index-csi">Characteristic Stability Index (CSI)</h3>
+<p>CSI applies the PSI framework to <strong>individual input variables</strong>.</p>
+<p><strong>Monitoring interpretation:</strong> - Identifies which features are drifting - Helps separate harmless demographic shifts from structural changes - Often more actionable than score-level PSI</p>
+<hr>
+</section>
+<section id="distribution-distance-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="distribution-distance-metrics">Distribution Distance Metrics</h3>
+<p>Alternative stability measures include: - Jensen–Shannon divergence - Wasserstein (Earth Mover’s) distance</p>
+<p><strong>Monitoring interpretation:</strong> - More robust for continuous or sparse data - Useful for modern ML features and embeddings - Complement PSI rather than replace it</p>
+<hr>
+</section>
+</section>
+<section id="rank-and-score-stability-metrics-is-model-behavior-consistent" class="level2">
+<h2 class="anchored" data-anchor-id="rank-and-score-stability-metrics-is-model-behavior-consistent">Rank and Score Stability Metrics: Is Model Behavior Consistent?</h2>
+<p>These metrics examine <strong>how scores behave over time</strong>, even when labels are delayed.</p>
+<section id="score-distribution-moments" class="level3">
+<h3 class="anchored" data-anchor-id="score-distribution-moments">Score Distribution Moments</h3>
+<p>Tracking changes in: - Mean - Variance - Skewness</p>
+<p><strong>Monitoring interpretation:</strong> - Sudden shifts may indicate upstream data issues - Often serve as early-warning signals</p>
+<hr>
+</section>
+<section id="rank-correlation-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="rank-correlation-metrics">Rank Correlation Metrics</h3>
+<p>Spearman or Kendall rank correlations compare score rankings across time windows.</p>
+<p><strong>Monitoring interpretation:</strong> - Detects instability in ordering - Useful for challenger comparisons and model refresh decisions</p>
+<hr>
+</section>
+</section>
+<section id="data-quality-metrics-is-the-input-data-still-reliable" class="level2">
+<h2 class="anchored" data-anchor-id="data-quality-metrics-is-the-input-data-still-reliable">Data Quality Metrics: Is the Input Data Still Reliable?</h2>
+<p>Performance degradation often originates from data issues rather than modeling flaws.</p>
+<section id="missingness-and-validity-checks" class="level3">
+<h3 class="anchored" data-anchor-id="missingness-and-validity-checks">Missingness and Validity Checks</h3>
+<p>Common checks include: - Missing rate by feature - Out-of-range or invalid values - Unexpected categorical levels</p>
+<p><strong>Monitoring interpretation:</strong> - Sudden changes often precede metric degradation - Essential for root-cause analysis</p>
+<hr>
+</section>
+<section id="volume-and-latency-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="volume-and-latency-metrics">Volume and Latency Metrics</h3>
+<p>Monitoring record counts and data arrival times helps contextualize metric changes.</p>
+<p><strong>Monitoring interpretation:</strong> - Volume shifts may reflect business changes - Data delays can bias performance estimates</p>
+<hr>
+</section>
+</section>
+<section id="business-outcome-metrics-is-the-model-still-delivering-value" class="level2">
+<h2 class="anchored" data-anchor-id="business-outcome-metrics-is-the-model-still-delivering-value">Business Outcome Metrics: Is the Model Still Delivering Value?</h2>
+<p>Technical model metrics should be interpreted alongside <strong>business KPIs</strong>.</p>
+<p>Examples include: - Approval or acceptance rates - Expected vs realized loss - Profit per decision - Override or manual intervention rates</p>
+<p><strong>Monitoring interpretation:</strong> - Stable model metrics with worsening business outcomes suggest strategy mismatch - Increasing overrides may signal declining trust in the model</p>
+<hr>
+</section>
+<section id="interpreting-metrics-together" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-metrics-together">Interpreting Metrics Together</h2>
+<p>No single metric diagnoses all forms of drift.</p>
+<p>Common diagnostic patterns include:</p>
 <ul>
-<li>State specific objectives, including any prespecified hypotheses</li>
+<li><p><strong>High PSI with stable AUC</strong><br>
+Population shift without performance loss</p></li>
+<li><p><strong>Stable AUC with worsening log loss or calibration</strong><br>
+Probability drift</p></li>
+<li><p><strong>Rising CSI in key predictors</strong><br>
+Structural changes in the population</p></li>
+<li><p><strong>Declining AUC and KS</strong><br>
+Concept drift requiring redevelopment</p></li>
 </ul>
+<hr>
 </section>
-<section id="literature-review" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="literature-review"><span class="header-section-number">2.3</span> Literature Review:</h2>
-<ul>
-<li>Review of relevant prior research and theories.</li>
-<li>Identification of gaps in existing knowledge.</li>
-</ul>
-<div style="page-break-after: always;"></div>
-</section>
-</section>
-<section id="sec-Methods" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Methods</h1>
-<section id="study-design" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="study-design"><span class="header-section-number">3.1</span> Study design</h2>
-<ul>
-<li>Present key elements of study design early in the paper</li>
-</ul>
-</section>
-<section id="setting" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="setting"><span class="header-section-number">3.2</span> Setting</h2>
-<ul>
-<li>Describe the setting, locations, and relevant dates, including periods of recruitment, exposure, follow-up, and data collection</li>
-</ul>
-</section>
-<section id="participants" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="participants"><span class="header-section-number">3.3</span> Participants</h2>
-<ul>
-<li>Cohort study — Give the eligibility criteria, and the sources and methods of selection of participants. Describe methods of follow-up</li>
-<li>Case-control study — Give the eligibility criteria, and the sources and methods of case ascertainment and control selection. Give the rationale for the choice of cases and controls</li>
-<li>Cross-sectional study — Give the eligibility criteria, and the sources and methods of selection of participants</li>
-<li>Cohort study — For matched studies, give matching criteria and number of exposed and unexposed</li>
-<li>Case-control study — For matched studies, give matching criteria and the number of controls per case</li>
-</ul>
-</section>
-<section id="variables" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="variables"><span class="header-section-number">3.4</span> Variables</h2>
-<ul>
-<li>Clearly define all outcomes, exposures, predictors, potential confounders, and effect modifiers. Give diagnostic criteria, if applicable</li>
-</ul>
-</section>
-<section id="data-sourcesmeasurement" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="data-sourcesmeasurement"><span class="header-section-number">3.5</span> Data sources/measurement</h2>
-<ul>
-<li>Give information separately for cases and controls in case-control studies and, if applicable, for exposed and unexposed groups in cohort and cross-sectional studies.</li>
-<li>For each variable of interest, give sources of data and details of methods of assessment (measurement). Describe comparability of assessment methods if there is more than one group</li>
-</ul>
-</section>
-<section id="bias" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="bias"><span class="header-section-number">3.6</span> Bias</h2>
-<ul>
-<li>Describe any efforts to address potential sources of bias</li>
-</ul>
-</section>
-<section id="study-size" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="study-size"><span class="header-section-number">3.7</span> Study size</h2>
-<ul>
-<li>Explain how the study size was arrived at</li>
-</ul>
-</section>
-<section id="quantitative-variables" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="quantitative-variables"><span class="header-section-number">3.8</span> Quantitative variables</h2>
-<ul>
-<li>Explain how quantitative variables were handled in the analyses. If applicable, describe which groupings were chosen and why</li>
-</ul>
-</section>
-<section id="statistical-methods" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="statistical-methods"><span class="header-section-number">3.9</span> Statistical methods</h2>
-<ul>
-<li>Describe all statistical methods, including those used to control for confounding</li>
-<li>Describe any methods used to examine subgroups and interactions</li>
-<li>Explain how missing data were addressed</li>
-<li>Cohort study — If applicable, explain how loss to follow-up was addressed</li>
-<li>Case-control study — If applicable, explain how matching of cases and controls was addressed</li>
-<li>Cross-sectional study — If applicable, describe analytical methods taking account of sampling strategy</li>
-<li>Describe any sensitivity analyses</li>
-</ul>
-<div style="page-break-after: always;"></div>
-</section>
-</section>
-<section id="sec-Results" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Results</h1>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Model monitoring is not about detecting failure at a single point in time, but about <strong>understanding how and why the modeling environment evolves</strong>.</p>
+<p>By combining: - Discrimination metrics - Calibration metrics - Stability metrics - Data quality indicators - Business outcomes</p>
+<p>practitioners can distinguish between population drift, calibration drift, and concept drift—and respond proportionately, whether through recalibration, policy adjustment, or full model redevelopment.</p>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{erhardt2026,
-  author = {Erhardt, Erik},
-  title = {Newfiletitle},
-  date = {2026-02-06},
-  url = {https://StatAcumen.com},
-  langid = {en},
-  abstract = {Document abstract may be somewhat long.}
-}
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-erhardt2026" class="csl-entry quarto-appendix-citeas" role="listitem">
-Erhardt, Erik. 2026. <span>“Newfiletitle.”</span> February 6, 2026. <a href="https://StatAcumen.com">https://StatAcumen.com</a>.
-</div></div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -566,60 +558,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     });
     clipboardModal.on('success', onCopySuccess);
   }
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("^(?:http:|https:)\/\/statacumen\.com");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

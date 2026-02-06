@@ -7,11 +7,11 @@ lightbox: auto
 editor: visual
 ---
 
-SQL (Structured Query Language) is commonly the backbone of working with relational databases. In this page, I review some intermediate commands and tranformations to prepare data for further analysis. 
+SQL (Structured Query Language) is commonly the backbone of working with relational databases. In this page, I review some intermediate commands and tranformations to prepare data for further analysis.
 
 #### 1. Common Table Expressions (CTEs)
 
-A Common Table Expression (CTE) is a temporary result set, useful for breaking down complex queries into simpler, more readable parts. They are also helpful if we are unable to create component tables piecemeal. 
+A Common Table Expression (CTE) is a temporary result set, useful for breaking down complex queries into simpler, more readable parts. They are also helpful if we are unable to create component tables piecemeal.
 
 ##### Example:
 
@@ -29,7 +29,6 @@ JOIN SalesCTE s ON e.EmployeeID = s.EmployeeID;
 ```
 
 Here, the CTE calculates the total sales per employee, which is then joined with the employee details for the final output.
-
 
 #### 2. Calling CTEs
 
@@ -50,7 +49,6 @@ WHERE DepartmentID IN (SELECT DepartmentID FROM DepartmentCTE);
 
 In this example, the CTE simplifies the query by isolating the logic that retrieves department information. We can then use the result of the CTE in the main query.
 
-
 #### 3. Views
 
 A View is a virtual table created by a `SELECT` query. It’s a stored query that we can treat like a regular table - and requires some writing permissions. Unlike CTEs, views are persistent and stored in the database schema.
@@ -69,7 +67,6 @@ We can now query `ActiveEmployees` as if it were a regular table:
 ``` sql
 SELECT * FROM ActiveEmployees;
 ```
-
 
 #### 4. Rank(), OVER(), and PARTITION
 

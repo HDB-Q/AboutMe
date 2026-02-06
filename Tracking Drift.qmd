@@ -1,0 +1,192 @@
+---
+title: Tracking Drift
+# author: "Your Name"
+filters:
+  - lightbox
+lightbox: auto
+editor: visual
+---
+
+## Introduction: Why Model Monitoring Matters
+
+A predictive model is meaningful only as long as the **population to which it is applied resembles the population on which it was developed**.\
+During development, the model learns relationships between input characteristics, predicted probabilities, and observed outcomes under a specific data-generating process.
+
+Over time, however, this process can change in several ways:
+
+-   **Population composition can shift**\
+    The distribution of customer characteristics, behaviors, or scores may change. Even if the model logic remains valid, it may now be applied to a different mix of observations.
+
+-   **Population parameters can shift**\
+    The relationship between predicted probabilities and observed outcomes may no longer align. The model may still rank-order risk correctly, but predicted probabilities become miscalibrated.
+
+-   **The population and the underlying concept can drift**\
+    The fundamental relationship between predictors and outcomes can weaken or change direction, reducing the model’s ability to discriminate between outcomes.
+
+Effective model monitoring aims to **detect these changes early**, distinguish between them, and guide appropriate remediation actions.
+
+------------------------------------------------------------------------
+
+## Discrimination Metrics: Is the Model Still Separating Outcomes?
+
+Discrimination metrics assess whether the model can still **rank-order observations correctly**.
+
+### AUC (Area Under the ROC Curve)
+
+AUC measures the probability that a randomly chosen positive observation receives a higher score than a randomly chosen negative observation.
+
+**Monitoring interpretation:** - Stable AUC suggests the model still captures relative risk ordering - Declining AUC indicates **concept drift** - AUC is insensitive to calibration changes
+
+------------------------------------------------------------------------
+
+### KS (Kolmogorov–Smirnov Statistic)
+
+KS measures the maximum separation between cumulative score distributions for positive and negative outcomes.
+
+**Monitoring interpretation:** - Declining KS indicates reduced class separation - KS is sensitive to shifts in score distributions - Often reacts earlier than AUC in operational settings
+
+------------------------------------------------------------------------
+
+### Gini Coefficient
+
+The Gini coefficient is a linear transformation of AUC:
+
+\[ \text{Gini} = 2 \times \text{AUC} - 1 \]
+
+**Monitoring interpretation:** - Mirrors AUC behavior - Commonly used in credit risk and regulatory reporting - Useful for business-facing communication
+
+------------------------------------------------------------------------
+
+## Calibration Metrics: Do the Probabilities Still Mean What They Say?
+
+Calibration metrics evaluate whether **predicted probabilities remain aligned with observed outcome rates**.
+
+### Calibration Curves (Reliability Diagrams)
+
+Predictions are grouped into probability buckets and compared to observed outcome frequencies.
+
+**Monitoring interpretation:** - Deviations from the diagonal indicate miscalibration - Calibration can drift even when AUC remains stable - Particularly important for pricing, provisioning, and decision thresholds
+
+------------------------------------------------------------------------
+
+### Log Loss (Cross-Entropy)
+
+Log loss penalizes confident but incorrect predictions.
+
+**Monitoring interpretation:** - Sensitive to probability shifts - Often degrades before AUC does - Useful early indicator of calibration drift
+
+------------------------------------------------------------------------
+
+### Brier Score
+
+The Brier score measures mean squared error of predicted probabilities.
+
+**Monitoring interpretation:** - Captures both calibration and discrimination effects - More interpretable than log loss for some audiences - Increasing Brier score suggests declining probability quality
+
+------------------------------------------------------------------------
+
+## Population Stability Metrics: Is the Population Changing?
+
+Stability metrics detect **shifts in input or score distributions**, often before labels are available.
+
+### Population Stability Index (PSI)
+
+PSI measures the divergence between a reference distribution (typically development or recent baseline) and the current population.
+
+**Monitoring interpretation:** - PSI \< 0.10: stable population - 0.10–0.25: moderate shift - ≥ 0.25: significant population drift - High PSI alone does not imply performance degradation
+
+------------------------------------------------------------------------
+
+### Characteristic Stability Index (CSI)
+
+CSI applies the PSI framework to **individual input variables**.
+
+**Monitoring interpretation:** - Identifies which features are drifting - Helps separate harmless demographic shifts from structural changes - Often more actionable than score-level PSI
+
+------------------------------------------------------------------------
+
+### Distribution Distance Metrics
+
+Alternative stability measures include: - Jensen–Shannon divergence - Wasserstein (Earth Mover’s) distance
+
+**Monitoring interpretation:** - More robust for continuous or sparse data - Useful for modern ML features and embeddings - Complement PSI rather than replace it
+
+------------------------------------------------------------------------
+
+## Rank and Score Stability Metrics: Is Model Behavior Consistent?
+
+These metrics examine **how scores behave over time**, even when labels are delayed.
+
+### Score Distribution Moments
+
+Tracking changes in: - Mean - Variance - Skewness
+
+**Monitoring interpretation:** - Sudden shifts may indicate upstream data issues - Often serve as early-warning signals
+
+------------------------------------------------------------------------
+
+### Rank Correlation Metrics
+
+Spearman or Kendall rank correlations compare score rankings across time windows.
+
+**Monitoring interpretation:** - Detects instability in ordering - Useful for challenger comparisons and model refresh decisions
+
+------------------------------------------------------------------------
+
+## Data Quality Metrics: Is the Input Data Still Reliable?
+
+Performance degradation often originates from data issues rather than modeling flaws.
+
+### Missingness and Validity Checks
+
+Common checks include: - Missing rate by feature - Out-of-range or invalid values - Unexpected categorical levels
+
+**Monitoring interpretation:** - Sudden changes often precede metric degradation - Essential for root-cause analysis
+
+------------------------------------------------------------------------
+
+### Volume and Latency Metrics
+
+Monitoring record counts and data arrival times helps contextualize metric changes.
+
+**Monitoring interpretation:** - Volume shifts may reflect business changes - Data delays can bias performance estimates
+
+------------------------------------------------------------------------
+
+## Business Outcome Metrics: Is the Model Still Delivering Value?
+
+Technical model metrics should be interpreted alongside **business KPIs**.
+
+Examples include: - Approval or acceptance rates - Expected vs realized loss - Profit per decision - Override or manual intervention rates
+
+**Monitoring interpretation:** - Stable model metrics with worsening business outcomes suggest strategy mismatch - Increasing overrides may signal declining trust in the model
+
+------------------------------------------------------------------------
+
+## Interpreting Metrics Together
+
+No single metric diagnoses all forms of drift.
+
+Common diagnostic patterns include:
+
+-   **High PSI with stable AUC**\
+    Population shift without performance loss
+
+-   **Stable AUC with worsening log loss or calibration**\
+    Probability drift
+
+-   **Rising CSI in key predictors**\
+    Structural changes in the population
+
+-   **Declining AUC and KS**\
+    Concept drift requiring redevelopment
+
+------------------------------------------------------------------------
+
+## Conclusion
+
+Model monitoring is not about detecting failure at a single point in time, but about **understanding how and why the modeling environment evolves**.
+
+By combining: - Discrimination metrics - Calibration metrics - Stability metrics - Data quality indicators - Business outcomes
+
+practitioners can distinguish between population drift, calibration drift, and concept drift—and respond proportionately, whether through recalibration, policy adjustment, or full model redevelopment.
